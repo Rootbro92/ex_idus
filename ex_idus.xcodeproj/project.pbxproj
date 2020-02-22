@@ -3,12 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		609956815F83418D5BFEBED2 /* Pods_ex_idus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD543026DED85A23DAE0A884 /* Pods_ex_idus.framework */; };
 		848D206B23FD85E8001CF01A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D206A23FD85E8001CF01A /* AppDelegate.swift */; };
-		848D206D23FD85E8001CF01A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D206C23FD85E8001CF01A /* SceneDelegate.swift */; };
 		848D206F23FD85E8001CF01A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D206E23FD85E8001CF01A /* ViewController.swift */; };
 		848D207223FD85E8001CF01A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 848D207023FD85E8001CF01A /* Main.storyboard */; };
 		848D207423FD85ED001CF01A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 848D207323FD85ED001CF01A /* Assets.xcassets */; };
@@ -18,12 +18,14 @@
 /* Begin PBXFileReference section */
 		848D206723FD85E8001CF01A /* ex_idus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ex_idus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		848D206A23FD85E8001CF01A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		848D206C23FD85E8001CF01A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		848D206E23FD85E8001CF01A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		848D207123FD85E8001CF01A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		848D207323FD85ED001CF01A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		848D207623FD85ED001CF01A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		848D207823FD85ED001CF01A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AE3398332429787C61165D59 /* Pods-ex_idus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ex_idus.release.xcconfig"; path = "Target Support Files/Pods-ex_idus/Pods-ex_idus.release.xcconfig"; sourceTree = "<group>"; };
+		B240B00E542714BDDE4F5B20 /* Pods-ex_idus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ex_idus.debug.xcconfig"; path = "Target Support Files/Pods-ex_idus/Pods-ex_idus.debug.xcconfig"; sourceTree = "<group>"; };
+		FD543026DED85A23DAE0A884 /* Pods_ex_idus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ex_idus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +33,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				609956815F83418D5BFEBED2 /* Pods_ex_idus.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		32F5DC5428DD07FCA1D6278C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B240B00E542714BDDE4F5B20 /* Pods-ex_idus.debug.xcconfig */,
+				AE3398332429787C61165D59 /* Pods-ex_idus.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		848D205E23FD85E8001CF01A = {
 			isa = PBXGroup;
 			children = (
 				848D206923FD85E8001CF01A /* ex_idus */,
 				848D206823FD85E8001CF01A /* Products */,
+				32F5DC5428DD07FCA1D6278C /* Pods */,
+				E4B39EBA88FD1D913118C26A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,15 +70,30 @@
 		848D206923FD85E8001CF01A /* ex_idus */ = {
 			isa = PBXGroup;
 			children = (
+				84AB88AF23FECD46000AA0C1 /* Resource */,
 				848D206A23FD85E8001CF01A /* AppDelegate.swift */,
-				848D206C23FD85E8001CF01A /* SceneDelegate.swift */,
 				848D206E23FD85E8001CF01A /* ViewController.swift */,
-				848D207023FD85E8001CF01A /* Main.storyboard */,
-				848D207323FD85ED001CF01A /* Assets.xcassets */,
-				848D207523FD85ED001CF01A /* LaunchScreen.storyboard */,
 				848D207823FD85ED001CF01A /* Info.plist */,
 			);
 			path = ex_idus;
+			sourceTree = "<group>";
+		};
+		84AB88AF23FECD46000AA0C1 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				848D207023FD85E8001CF01A /* Main.storyboard */,
+				848D207323FD85ED001CF01A /* Assets.xcassets */,
+				848D207523FD85ED001CF01A /* LaunchScreen.storyboard */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		E4B39EBA88FD1D913118C26A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FD543026DED85A23DAE0A884 /* Pods_ex_idus.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +103,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 848D207B23FD85ED001CF01A /* Build configuration list for PBXNativeTarget "ex_idus" */;
 			buildPhases = (
+				B05EDABD2966F498C3874CA1 /* [CP] Check Pods Manifest.lock */,
 				848D206323FD85E8001CF01A /* Sources */,
 				848D206423FD85E8001CF01A /* Frameworks */,
 				848D206523FD85E8001CF01A /* Resources */,
+				0492B21CF6B0BA7920F8AACC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -133,6 +164,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0492B21CF6B0BA7920F8AACC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ex_idus/Pods-ex_idus-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ex_idus/Pods-ex_idus-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ex_idus/Pods-ex_idus-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B05EDABD2966F498C3874CA1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ex_idus-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		848D206323FD85E8001CF01A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -140,7 +213,6 @@
 			files = (
 				848D206F23FD85E8001CF01A /* ViewController.swift in Sources */,
 				848D206B23FD85E8001CF01A /* AppDelegate.swift in Sources */,
-				848D206D23FD85E8001CF01A /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,11 +354,13 @@
 		};
 		848D207C23FD85ED001CF01A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B240B00E542714BDDE4F5B20 /* Pods-ex_idus.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L8A7A463KF;
 				INFOPLIST_FILE = ex_idus/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -300,11 +374,13 @@
 		};
 		848D207D23FD85ED001CF01A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AE3398332429787C61165D59 /* Pods-ex_idus.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L8A7A463KF;
 				INFOPLIST_FILE = ex_idus/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
