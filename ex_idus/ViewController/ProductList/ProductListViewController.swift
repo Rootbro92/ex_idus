@@ -21,7 +21,7 @@ class ProductListViewController: UIViewController {
     
 //MARK:- Properties
     var list : [Product] = []
-
+    
 
 //MARK:- UI Properties
     @IBOutlet weak var productListCollectionView: UICollectionView!
@@ -89,7 +89,7 @@ extension ProductListViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProductListCell", for: indexPath) as? ProductCell else {
             return UICollectionViewCell()
         }
-        
+        NSLog("호출된 행번호 : \(indexPath.row), url:\(list[indexPath.row].thumb)")
         let url = URL(string: list[indexPath.row].thumb)
         cell.productImage.load(url: url!)
         cell.productImage.clipsToBounds = true

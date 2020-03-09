@@ -1,20 +1,19 @@
 //
-//  ReceiveProductList.swift
+//  Product.swift
 //  ex_idus
 //
-//  Created by 박근형 on 2020/02/24.
+//  Created by 박근형 on 2020/02/23.
 //  Copyright © 2020 pgh. All rights reserved.
 //
 
 import Foundation
 
-
 struct ProductData: Codable{
     var statusCode: Int
-    var body: [ProductData2]
+    var body: [Product]
 }
 
-struct ProductData2: Codable {
+struct Product: Codable{
     var id: Int
     var thumb: String
     var title: String
@@ -24,5 +23,11 @@ struct ProductData2: Codable {
         case id, title, seller
         case thumb = "thumbnail_520"
     }
+    
+    init(id: Int, thumb: String, title: String, seller: String) {
+        self.id = id
+        self.thumb = thumb
+        self.title = title
+        self.seller = seller
+    }
 }
-
