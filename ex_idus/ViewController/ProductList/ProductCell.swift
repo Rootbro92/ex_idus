@@ -7,11 +7,23 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ProductCell: UICollectionViewCell {
-    
+    struct UI {
+        static let imageRadius: CGFloat = 14
+    }
     @IBOutlet weak var productImage: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var sellerLabel: UILabel!
     
+    func configure(with product: Product){
+        let url = URL(string: product.thumb)
+        productImage.kf.setImage(with: url!)
+        productImage.clipsToBounds = true
+        productImage.layer.cornerRadius = UI.imageRadius
+        titleLabel.text = product.title
+        sellerLabel.text = product.seller
+        //print(product)
+    }
 }
