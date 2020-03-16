@@ -8,41 +8,57 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
-var imageCache: [String: URL] = [:]
+
 
 extension UIImageView {
-  func load(url: URL) {
-
-    print("#1 count", imageCache.count)
-
-    guard imageCache[url.absoluteString] == url else {
-      imageCache[url.absoluteString] = url
-
-      print("#2 캐시 X, 이미지 로드 중")
-      DispatchQueue.global().async { [weak self] in
-        if let data = try? Data(contentsOf: url) {
-          if let image = UIImage(data: data) {
-            DispatchQueue.main.async {
-              self?.image = image
+    
+    func load(with urlString: String) {
+        let cache = ImageCache.default
+        cache.retrieveImage(forKey: urlString, options: nil) { (image, _) in
+            if let image = image {
+                self.image = image
+            } else {
+                let url = URL(string: urlString)
+                let resource = ImageResource(downloadURL: url!, cacheKey: urlString)
+                self.kf.setImage(with: resource)
             }
-          }
         }
-      }
-      return
     }
-
-
-
-    DispatchQueue.global().async { [weak self] in
-      print("#3 캐시 O, 저장된 이미지 로드")
-      if let data = try? Data(contentsOf: imageCache[url.absoluteString]!) {
-        if let image = UIImage(data: data) {
-          DispatchQueue.main.async {
-            self?.image = image
-          }
-        }
-      }
-    }
-  }
+    
 }
+//  func load(url: URL) {
+//
+//    print("#1 count", imageCache.count)
+//
+//    guard imageCache[url.absoluteString] == url else {
+//      imageCache[url.absoluteString] = url
+//
+//      print("#2 캐시 X, 이미지 로드 중")
+//      DispatchQueue.global().async { [weak self] in
+//        if let data = try? Data(contentsOf: url) {
+//          if let image = UIImage(data: data) {
+//            DispatchQueue.main.async {
+//              self?.image = image
+//            }
+//          }
+//        }
+//      }
+//      return
+//    }
+//
+//
+//
+//    DispatchQueue.global().async { [weak self] in
+//      print("#3 캐시 O, 저장된 이미지 로드")
+//      if let data = try? Data(contentsOf: imageCache[url.absoluteString]!) {
+//        if let image = UIImage(data: data) {
+//          DispatchQueue.main.async {
+//            self?.image = image
+//          }
+//        }
+//      }
+//    }
+//  }
+//}
