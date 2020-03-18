@@ -93,7 +93,10 @@ extension ProductListViewController {
     
     @objc func refresh() {
         print("refresh")
-        productListCollectionView.refreshControl?.endRefreshing()
+        DispatchQueue.main.async { [weak self] in
+            self?.reload()
+            self?.productListCollectionView.refreshControl?.endRefreshing()
+        }
     }
 }
 
