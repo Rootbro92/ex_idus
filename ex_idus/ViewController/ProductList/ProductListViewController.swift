@@ -93,9 +93,15 @@ extension ProductListViewController {
     
     @objc func refresh() {
         print("refresh")
-        DispatchQueue.main.async { [weak self] in
-            self?.reload()
-            self?.productListCollectionView.refreshControl?.endRefreshing()
+        DispatchQueue.global().async { [weak self] in
+            self?.list.removeAll()
+            self?.receiveData()
+            Thread.sleep(forTimeInterval: 2)
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.reload()
+                self?.productListCollectionView.refreshControl?.endRefreshing()
+            }
         }
     }
 }
@@ -116,9 +122,6 @@ extension ProductListViewController: UICollectionViewDataSource {
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print("willDisplayCell")
-    }
 }
 
 //MARK:- CollectionView Delegate
@@ -126,6 +129,10 @@ extension ProductListViewController: UICollectionViewDataSource {
 extension ProductListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        print("willDisplayCell")
     }
 }
 
