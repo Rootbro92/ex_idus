@@ -25,6 +25,9 @@ class ProductListViewController: UIViewController {
     
     var list : [Product] = []
     private var refreshControl = UIRefreshControl()
+    var isLoading = false
+    var refreshView: ListRefreshReusableView?
+    
     
     //MARK: UI Properties
     
@@ -37,6 +40,8 @@ class ProductListViewController: UIViewController {
         receiveData()
         setupUI()
         setupFlowLayout()
+        let loadingReusableNib = UINib(nibName: "ListRefreshReusableView", bundle: nil)
+        self.productListCollectionView.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "ListRefreshReusableViewid")
     }
 }
 
@@ -51,7 +56,7 @@ extension ProductListViewController {
             
             switch response.result {
             case .success:
-                print(response.json as! ProductData)
+                //print(response.json as! ProductData)
                 let result = response.json as! ProductData
                 self?.list = result.body
                 self?.reload()
@@ -85,6 +90,7 @@ extension ProductListViewController {
         productListCollectionView.dataSource = self
         productListCollectionView.refreshControl = refreshControl
         productListCollectionView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        
     }
     
     func reload() {
@@ -104,6 +110,19 @@ extension ProductListViewController {
             }
         }
     }
+    
+    func loadMoreData() {
+          if !self.isLoading {
+              self.isLoading = true
+              DispatchQueue.global().async {
+                  Thread.sleep(forTimeInterval: 2)
+                  DispatchQueue.main.async { [weak self] in
+                      self?.productListCollectionView.reloadData()
+                      self?.isLoading = false
+                  }
+              }
+          }
+      }
 }
 
 //MARK:- CollectionView DataSource
@@ -122,6 +141,16 @@ extension ProductListViewController: UICollectionViewDataSource {
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        print("viewForSupplementaryElementOfKind")
+        if kind == UICollectionView.elementKindSectionFooter {
+            let aFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "ListRefreshReusableViewid", for: indexPath) as! ListRefreshReusableView
+            refreshView = aFooterView
+            refreshView?.backgroundColor = UIColor.clear
+            return aFooterView
+        }
+        return UICollectionReusableView()
+    }
 }
 
 //MARK:- CollectionView Delegate
@@ -132,7 +161,33 @@ extension ProductListViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print("willDisplayCell")
+        if indexPath.row == list.count - 10 && !self.isLoading {
+            loadMoreData()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        if self.isLoading {
+            return CGSize.zero
+        } else {
+            return CGSize(width: productListCollectionView.bounds.size.width, height: 55)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+        print("start")
+        if elementKind == UICollectionView.elementKindSectionFooter {
+            
+            self.refreshView?.refreshControl.startAnimating()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
+        print("end")
+        if elementKind == UICollectionView.elementKindSectionFooter {
+            
+            self.refreshView?.refreshControl.stopAnimating()
+        }
     }
 }
 
