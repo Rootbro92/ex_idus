@@ -19,6 +19,7 @@ class ProductListViewController: UIViewController {
         static let lineSpacing: CGFloat = 14
         static let itemWidth: CGFloat = UIScreen.main.bounds.width / 2 * 0.98
         static let itemHeight: CGFloat = itemWidth * 1.5
+        static let FooterViewHeight: CGFloat = 55
     }
     
     //MARK: Properties
@@ -39,8 +40,6 @@ class ProductListViewController: UIViewController {
         receiveData()
         setupUI()
         setupFlowLayout()
-        let loadingReusableNib = UINib(nibName: "LoadingReusableView", bundle: nil)
-        productListCollectionView.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "loadingresuableviewid")
     }
 }
 
@@ -80,6 +79,7 @@ extension ProductListViewController {
         flowLayout.minimumInteritemSpacing = UI.itemSpacing
         flowLayout.minimumLineSpacing = UI.lineSpacing
         flowLayout.itemSize = CGSize(width: UI.itemWidth , height: UI.itemHeight)
+        flowLayout.footerReferenceSize = CGSize(width: productListCollectionView.bounds.size.width, height: 55)
         self.productListCollectionView.collectionViewLayout = flowLayout
     }
     
@@ -88,6 +88,8 @@ extension ProductListViewController {
         productListCollectionView.dataSource = self
         productListCollectionView.refreshControl = refreshControl
         productListCollectionView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        let loadingReusableNib = UINib(nibName: "LoadingReusableView", bundle: nil)
+        productListCollectionView.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "loadingresuableviewid")
         
     }
     
@@ -99,12 +101,11 @@ extension ProductListViewController {
         if !self.isLoading {
             self.isLoading = true
             DispatchQueue.global().async {
-                // Fake background loading task for 2 seconds
-                sleep(2)
-                // Download more data here
-                DispatchQueue.main.async {
-                    self.reload()
-                    self.isLoading = false
+                Thread.sleep(forTimeInterval: 2)
+                
+                DispatchQueue.main.async { [weak self] in
+                    self?.reload()
+                    self?.isLoading = false
                 }
             }
         }
@@ -142,10 +143,11 @@ extension ProductListViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        print("referenceSizeForFooterInSection")
         if self.isLoading {
             return CGSize.zero
         } else {
-            return CGSize(width: collectionView.bounds.size.width, height: 55)
+            return CGSize(width: collectionView.bounds.size.width, height: UI.FooterViewHeight)
         }
     }
 }
@@ -159,6 +161,7 @@ extension ProductListViewController: UICollectionViewDelegate {
     
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        print("willDisplayCell")
         if indexPath.row == list.count - 5 && !self.isLoading {
             loadMoreData()
         }

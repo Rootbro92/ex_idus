@@ -14,16 +14,19 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="3W2-Er-b2r">
-                    <rect key="frame" x="150" y="16" width="20" height="20"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="3W2-Er-b2r">
+                    <rect key="frame" x="150" y="15" width="20" height="20"/>
                 </activityIndicatorView>
             </subviews>
+            <constraints>
+                <constraint firstItem="3W2-Er-b2r" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="5G2-fT-mH0"/>
+                <constraint firstItem="3W2-Er-b2r" firstAttribute="centerX" secondItem="U6b-Vx-4bR" secondAttribute="centerX" id="ajr-6s-NMe"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="VXr-Tz-HHm"/>
             <connections>
                 <outlet property="activityIndicator" destination="3W2-Er-b2r" id="Kj8-XV-r1P"/>
             </connections>
-            <point key="canvasLocation" x="139" y="106"/>
+            <point key="canvasLocation" x="-1" y="43"/>
         </collectionReusableView>
     </objects>
 </document>
