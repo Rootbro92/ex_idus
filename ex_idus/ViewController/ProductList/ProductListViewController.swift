@@ -26,8 +26,7 @@ class ProductListViewController: UIViewController {
     var list : [Product] = []
     private var refreshControl = UIRefreshControl()
     var isLoading = false
-    var refreshView: ListRefreshReusableView?
-    
+    var loadingView: LoadingReusableView?
     
     //MARK: UI Properties
     
@@ -40,8 +39,8 @@ class ProductListViewController: UIViewController {
         receiveData()
         setupUI()
         setupFlowLayout()
-        let loadingReusableNib = UINib(nibName: "ListRefreshReusableView", bundle: nil)
-        self.productListCollectionView.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "ListRefreshReusableViewid")
+        let loadingReusableNib = UINib(nibName: "LoadingReusableView", bundle: nil)
+        productListCollectionView.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "loadingresuableviewid")
     }
 }
 
@@ -63,7 +62,6 @@ extension ProductListViewController {
             case .failure:
                 guard response.error == nil else {
                     print(response.error!)
-                    
                     switch response.error! {
                     case .decode:
                         print("decode Error")
@@ -97,6 +95,21 @@ extension ProductListViewController {
         productListCollectionView.reloadData()
     }
     
+    func loadMoreData() {
+        if !self.isLoading {
+            self.isLoading = true
+            DispatchQueue.global().async {
+                // Fake background loading task for 2 seconds
+                sleep(2)
+                // Download more data here
+                DispatchQueue.main.async {
+                    self.reload()
+                    self.isLoading = false
+                }
+            }
+        }
+    }
+    
     @objc func refresh() {
         print("refresh")
         DispatchQueue.global().async { [weak self] in
@@ -110,19 +123,6 @@ extension ProductListViewController {
             }
         }
     }
-    
-    func loadMoreData() {
-          if !self.isLoading {
-              self.isLoading = true
-              DispatchQueue.global().async {
-                  Thread.sleep(forTimeInterval: 2)
-                  DispatchQueue.main.async { [weak self] in
-                      self?.productListCollectionView.reloadData()
-                      self?.isLoading = false
-                  }
-              }
-          }
-      }
 }
 
 //MARK:- CollectionView DataSource
@@ -141,15 +141,12 @@ extension ProductListViewController: UICollectionViewDataSource {
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        print("viewForSupplementaryElementOfKind")
-        if kind == UICollectionView.elementKindSectionFooter {
-            let aFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "ListRefreshReusableViewid", for: indexPath) as! ListRefreshReusableView
-            refreshView = aFooterView
-            refreshView?.backgroundColor = UIColor.clear
-            return aFooterView
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        if self.isLoading {
+            return CGSize.zero
+        } else {
+            return CGSize(width: collectionView.bounds.size.width, height: 55)
         }
-        return UICollectionReusableView()
     }
 }
 
@@ -160,35 +157,37 @@ extension ProductListViewController: UICollectionViewDelegate {
         print(indexPath.row)
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.row == list.count - 10 && !self.isLoading {
+        if indexPath.row == list.count - 5 && !self.isLoading {
             loadMoreData()
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        if self.isLoading {
-            return CGSize.zero
-        } else {
-            return CGSize(width: productListCollectionView.bounds.size.width, height: 55)
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionFooter {
+            let aFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "loadingresuableviewid", for: indexPath) as! LoadingReusableView
+            loadingView = aFooterView
+            loadingView?.backgroundColor = UIColor.clear
+            return aFooterView
         }
+        return UICollectionReusableView()
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
-        print("start")
         if elementKind == UICollectionView.elementKindSectionFooter {
-            
-            self.refreshView?.refreshControl.startAnimating()
+            self.loadingView?.activityIndicator.startAnimating()
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
-        print("end")
         if elementKind == UICollectionView.elementKindSectionFooter {
-            
-            self.refreshView?.refreshControl.stopAnimating()
+            self.loadingView?.activityIndicator.stopAnimating()
         }
     }
+    
+    
+    
 }
 
 
