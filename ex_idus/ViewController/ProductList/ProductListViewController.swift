@@ -24,6 +24,9 @@ class ProductListViewController: UIViewController {
     
     //MARK: Properties
     
+    
+    //승진: refreshcontroller만 private를 한 이유?
+    // 다른곳(파일)에서 사용안하면 무조건 private로 해놓는 습관 들어야됨
     var list : [Product] = []
     private var refreshControl = UIRefreshControl()
     var isLoading = false
@@ -95,6 +98,7 @@ extension ProductListViewController {
     
     func reload() {
         productListCollectionView.reloadData()
+        productListCollectionView.refreshControl?.endRefreshing()
     }
     
     func loadMoreData() {
@@ -113,16 +117,35 @@ extension ProductListViewController {
     
     @objc func refresh() {
         print("refresh")
-        DispatchQueue.global().async { [weak self] in
-            self?.list.removeAll()
+        //승진: refresh 플로우는 외우는것도 좋아
+        //1. 가지고 있던 데이터 전체 삭제 (list 배열)
+        //2. 다시 데이터 불로오기
+        
+        
+        //NSThread sleep vs dispatch after 두개 찾아봐
+        //Thread sleep은 좋은 방법이 아니다.
+        //다른것도 다 바꿔
+        DispatchQueue.global().asyncAfter(deadline: .now() + 2) { [weak self] in
+            self?.list.removeAll(keepingCapacity: true)
             self?.receiveData()
-            Thread.sleep(forTimeInterval: 2)
             
             DispatchQueue.main.async { [weak self] in
                 self?.reload()
-                self?.productListCollectionView.refreshControl?.endRefreshing()
+                //난 reload에 refreshcontrol을 end 로직까지 넣었다.
             }
         }
+        
+        
+//        DispatchQueue.global().async { [weak self] in
+//            self?.list.removeAll()
+//            self?.receiveData()
+//            Thread.sleep(forTimeInterval: 2)
+//
+//            DispatchQueue.main.async { [weak self] in
+//                self?.reload()
+//                self?.productListCollectionView.refreshControl?.endRefreshing()
+//            }
+//        }
     }
 }
 
