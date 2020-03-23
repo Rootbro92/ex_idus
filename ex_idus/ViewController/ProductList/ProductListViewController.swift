@@ -89,20 +89,19 @@ extension ProductListViewController {
         productListCollectionView.refreshControl = refreshControl
         productListCollectionView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
         let loadingReusableNib = UINib(nibName: "LoadingReusableView", bundle: nil)
-        productListCollectionView.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "loadingresuableviewid")
+        productListCollectionView.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: LoadingReusableView.reuseIdentifier)
         
     }
     
     func reload() {
         productListCollectionView.reloadData()
+        productListCollectionView.refreshControl?.endRefreshing()
     }
     
     func loadMoreData() {
         if !self.isLoading {
             self.isLoading = true
-            DispatchQueue.global().async {
-                Thread.sleep(forTimeInterval: 2)
-                
+            DispatchQueue.global().asyncAfter(deadline: .now() + 2) { [weak self] in
                 DispatchQueue.main.async { [weak self] in
                     self?.reload()
                     self?.isLoading = false
@@ -113,18 +112,38 @@ extension ProductListViewController {
     
     @objc func refresh() {
         print("refresh")
-        DispatchQueue.global().async { [weak self] in
-            self?.list.removeAll()
+        //승진: refresh 플로우는 외우는것도 좋아
+        //1. 가지고 있던 데이터 전체 삭제 (list 배열)
+        //2. 다시 데이터 불로오기
+        
+        
+        //NSThread sleep vs dispatch after 두개 찾아봐
+        //Thread sleep은 좋은 방법이 아니다.
+        //다른것도 다 바꿔
+        DispatchQueue.global().asyncAfter(deadline: .now() + 2) { [weak self] in
+            self?.list.removeAll(keepingCapacity: true)
             self?.receiveData()
-            Thread.sleep(forTimeInterval: 2)
             
             DispatchQueue.main.async { [weak self] in
                 self?.reload()
-                self?.productListCollectionView.refreshControl?.endRefreshing()
+                //난 reload에 refreshcontrol을 end 로직까지 넣었다.
             }
         }
+        
+        
+        //        DispatchQueue.global().async { [weak self] in
+        //            self?.list.removeAll()
+        //            self?.receiveData()
+        //            Thread.sleep(forTimeInterval: 2)
+        //
+        //            DispatchQueue.main.async { [weak self] in
+        //                self?.reload()
+        //                self?.productListCollectionView.refreshControl?.endRefreshing()
+        //            }
+        //        }
     }
 }
+
 
 //MARK:- CollectionView DataSource
 
@@ -135,7 +154,7 @@ extension ProductListViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProductListCell", for: indexPath) as? ProductCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.reuseIdentifier, for: indexPath) as? ProductCell else {
             return UICollectionViewCell()
         }
         cell.configure(with: list[indexPath.row])
@@ -162,14 +181,14 @@ extension ProductListViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         print("willDisplayCell")
-        if indexPath.row == list.count - 5 && !self.isLoading {
+        if indexPath.row == list.count - 10 && !self.isLoading {
             loadMoreData()
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionFooter {
-            let aFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "loadingresuableviewid", for: indexPath) as! LoadingReusableView
+            let aFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: LoadingReusableView.reuseIdentifier, for: indexPath) as! LoadingReusableView
             loadingView = aFooterView
             loadingView?.backgroundColor = UIColor.clear
             return aFooterView
