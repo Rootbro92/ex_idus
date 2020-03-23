@@ -92,7 +92,7 @@ extension ProductListViewController {
         productListCollectionView.refreshControl = refreshControl
         productListCollectionView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
         let loadingReusableNib = UINib(nibName: "LoadingReusableView", bundle: nil)
-        productListCollectionView.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "loadingresuableviewid")
+        productListCollectionView.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: LoadingReusableView.reuseIdentifier)
         
     }
     
@@ -104,9 +104,7 @@ extension ProductListViewController {
     func loadMoreData() {
         if !self.isLoading {
             self.isLoading = true
-            DispatchQueue.global().async {
-                Thread.sleep(forTimeInterval: 2)
-                
+            DispatchQueue.global().asyncAfter(deadline: .now() + 2) { [weak self] in
                 DispatchQueue.main.async { [weak self] in
                     self?.reload()
                     self?.isLoading = false
@@ -136,6 +134,7 @@ extension ProductListViewController {
         }
         
         
+
 //        DispatchQueue.global().async { [weak self] in
 //            self?.list.removeAll()
 //            self?.receiveData()
@@ -146,8 +145,20 @@ extension ProductListViewController {
 //                self?.productListCollectionView.refreshControl?.endRefreshing()
 //            }
 //        }
+
+        //        DispatchQueue.global().async { [weak self] in
+        //            self?.list.removeAll()
+        //            self?.receiveData()
+        //            Thread.sleep(forTimeInterval: 2)
+        //
+        //            DispatchQueue.main.async { [weak self] in
+        //                self?.reload()
+        //                self?.productListCollectionView.refreshControl?.endRefreshing()
+        //            }
+        //        }
     }
 }
+
 
 //MARK:- CollectionView DataSource
 
@@ -158,7 +169,7 @@ extension ProductListViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProductListCell", for: indexPath) as? ProductCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.reuseIdentifier, for: indexPath) as? ProductCell else {
             return UICollectionViewCell()
         }
         cell.configure(with: list[indexPath.row])
@@ -185,14 +196,14 @@ extension ProductListViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         print("willDisplayCell")
-        if indexPath.row == list.count - 5 && !self.isLoading {
+        if indexPath.row == list.count - 10 && !self.isLoading {
             loadMoreData()
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionFooter {
-            let aFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "loadingresuableviewid", for: indexPath) as! LoadingReusableView
+            let aFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: LoadingReusableView.reuseIdentifier, for: indexPath) as! LoadingReusableView
             loadingView = aFooterView
             loadingView?.backgroundColor = UIColor.clear
             return aFooterView
