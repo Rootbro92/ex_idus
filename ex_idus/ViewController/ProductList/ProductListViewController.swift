@@ -27,15 +27,14 @@ class ProductListViewController: UIViewController {
     
     //승진: refreshcontroller만 private를 한 이유?
     // 다른곳(파일)에서 사용안하면 무조건 private로 해놓는 습관 들어야됨
-    var list : [Product] = []
-    private var refreshControl = UIRefreshControl()
-    private var isLoading = false
-    private var loadingView: LoadingReusableView?
+    private var list : [Product] = []
     private var pageNum = 1
     
     //MARK: UI Properties
     
     @IBOutlet weak var productListCollectionView: UICollectionView!
+    private var refreshControl = UIRefreshControl()
+    private var loadingView: LoadingReusableView?
     
     //MARK: Life Cycle
     
@@ -43,35 +42,66 @@ class ProductListViewController: UIViewController {
         super.viewDidLoad()
         receiveData()
         setupUI()
-        setupFlowLayout()
     }
 }
 
 //MARK:- Methods
 
 extension ProductListViewController {
-    func receiveData() {
+    //    private func receiveData(page: Int = 1) {
+    //
+    //        let baseUrl = "https://2jt4kq01ij.execute-api.ap-northeast-2.amazonaws.com"
+    //        let path = "/prod/products"
+    //        let page = "?page=\(page)"
+    //        showLoading(true)
+    //        Network.shared.request(with: baseUrl + path + page, decoder: ProductData.self) { [weak self] response in
+    //
+    //            switch response.result {
+    //            case .success:
+    //                //print(response.json as! ProductData)
+    //                let result = response.json as! ProductData
+    //                self?.list.append(contentsOf: result.body)
+    //                self?.reload()
+    //                self?.showLoading(false)
+    //            case .failure:
+    //                self?.showLoading(false)
+    //                guard response.error == nil else {
+    //                    print(response.error!)
+    //
+    ////                    switch response.error! {
+    //////                    case .decode:
+    //////                        print("decode Error")
+    //////                    case .notFound:
+    //////                        print("통신 에러")
+    //////                    }
+    //                    return
+    //                }
+    //            }
+    //        }
+    //    }
+    
+    private func receiveData(page: Int = 1) {
         
-        let baseUrl = "https://2jt4kq01ij.execute-api.ap-northeast-2.amazonaws.com"
-        let path = "/prod/products"
-        let page = "?page=\(pageNum)"
-        Network.shared.request(with: baseUrl + path + page, decoder: ProductData.self) { [weak self] response in
-            
+        showLoading(true)
+        Network.shared.request(target: .productList(page: page), decoder: ProductData.self) { [weak self] response in
             switch response.result {
             case .success:
                 //print(response.json as! ProductData)
                 let result = response.json as! ProductData
                 self?.list.append(contentsOf: result.body)
                 self?.reload()
+                self?.showLoading(false)
             case .failure:
+                self?.showLoading(false)
                 guard response.error == nil else {
                     print(response.error!)
-                    switch response.error! {
-                    case .decode:
-                        print("decode Error")
-                    case .notFound:
-                        print("통신 에러")
-                    }
+                    
+                    //                    switch response.error! {
+                    ////                    case .decode:
+                    ////                        print("decode Error")
+                    ////                    case .notFound:
+                    ////                        print("통신 에러")
+                    ////                    }
                     return
                 }
             }
@@ -87,7 +117,8 @@ extension ProductListViewController {
         self.productListCollectionView.collectionViewLayout = flowLayout
     }
     
-    func setupUI() {
+    private func setupUI() {
+        setupFlowLayout()
         productListCollectionView.delegate = self
         productListCollectionView.dataSource = self
         productListCollectionView.refreshControl = refreshControl
@@ -96,47 +127,42 @@ extension ProductListViewController {
         productListCollectionView.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: LoadingReusableView.reuseIdentifier)
     }
     
-    func reload() {
+    private func reload() {
         productListCollectionView.reloadData()
         productListCollectionView.refreshControl?.endRefreshing()
     }
     
-    func loadMoreData() {
-        if !self.isLoading {
-            self.isLoading = true
-            DispatchQueue.global().asyncAfter(deadline: .now() + 2) { [weak self] in
-                DispatchQueue.main.async { [weak self] in
-                    self?.pageNum += 1
-                    self?.receiveData()
-                    self?.reload()
-                    self?.isLoading = false
-                }
-            }
+    private func showLoading(_ isLoad: Bool) {
+        
+        if isLoad {
+            productListCollectionView.refreshControl?.beginRefreshing()
+            loadingView?.activityIndicator.startAnimating()
+        } else {
+            productListCollectionView.refreshControl?.endRefreshing()
+            loadingView?.activityIndicator.stopAnimating()
+        }
+        
+    }
+    
+    
+    private func loadMoreData() {
+        showLoading(true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+            guard let self = self else { return }
+            self.pageNum += 1
+            self.receiveData(page: self.pageNum)
+            self.reload()
         }
     }
     
+    
     @objc func refresh() {
-        print("refresh")
-        //승진: refresh 플로우는 외우는것도 좋아
-        //1. 가지고 있던 데이터 전체 삭제 (list 배열)
-        //2. 다시 데이터 불로오기
-        
-        
-        //NSThread sleep vs dispatch after 두개 찾아봐
-        //Thread sleep은 좋은 방법이 아니다.
-        //다른것도 다 바꿔
-        DispatchQueue.global().asyncAfter(deadline: .now() + 2) { [weak self] in
-            self?.list.removeAll(keepingCapacity: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+            self?.list.removeAll(keepingCapacity: true) //메모리 주소 킵
             self?.pageNum = 1
             self?.receiveData()
-            
-            DispatchQueue.main.async { [weak self] in
-                self?.reload()
-                //난 reload에 refreshcontrol을 end 로직까지 넣었다.
-            }
+            self?.reload()
         }
-        
-        
     }
 }
 
@@ -156,8 +182,6 @@ extension ProductListViewController: UICollectionViewDataSource {
         cell.configure(with: list[indexPath.row])
         return cell
     }
-    
-    
 }
 
 //MARK:- CollectionView Delegate
@@ -169,8 +193,7 @@ extension ProductListViewController: UICollectionViewDelegate {
     
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print("willDisplayCell")
-        if indexPath.row == list.count - 10 && !self.isLoading {
+        if indexPath.row == list.count - 2 {
             loadMoreData()
         }
     }
@@ -184,36 +207,20 @@ extension ProductListViewController: UICollectionViewDelegate {
         }
         return UICollectionReusableView()
     }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
-        //print("willDisplaySupplementaryView")
-        if elementKind == UICollectionView.elementKindSectionFooter {
-            self.loadingView?.activityIndicator.startAnimating()
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
-        //print("didEndDisplayingSupplementaryView")
-        if elementKind == UICollectionView.elementKindSectionFooter {
-            self.loadingView?.activityIndicator.stopAnimating()
-        }
-    }
-    
-    
-    
 }
 
 // MARK:- CollectionView Delegate FlowLayout
 extension ProductListViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        //print("referenceSizeForFooterInSection \(self.isLoading)")
-        if self.isLoading {
+        
+        if let isLoading = self.loadingView?.activityIndicator.isAnimating, isLoading{
             return CGSize.zero
         } else {
             return CGSize(width: collectionView.bounds.size.width, height: UI.FooterViewHeight)
         }
     }
 }
+
 
 

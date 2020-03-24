@@ -18,12 +18,11 @@ class ProductCell: UICollectionViewCell {
     @IBOutlet weak var sellerLabel: UILabel!
     
     func configure(with product: Product){
-        //let url = URL(string: product.thumb)
-        productImage.load(with: product.thumb)
+        let url = URL(string: product.thumb)
+        productImage.kf.setImage(with: url)
         productImage.clipsToBounds = true
         productImage.layer.cornerRadius = UI.imageRadius
         titleLabel.text = product.title
         sellerLabel.text = product.seller
-        //print(product)
     }
 }

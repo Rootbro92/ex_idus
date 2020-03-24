@@ -6,6 +6,7 @@ target 'ex_idus' do
   use_frameworks!
   pod 'Alamofire', '~> 5.0.0-rc.3'
   pod 'Kingfisher'
+  pod 'Moya', '~> 14.0'
   # Pods for ex_idus
 
 end
