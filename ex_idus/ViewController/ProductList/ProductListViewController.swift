@@ -137,28 +137,6 @@ extension ProductListViewController {
         }
         
         
-
-//        DispatchQueue.global().async { [weak self] in
-//            self?.list.removeAll()
-//            self?.receiveData()
-//            Thread.sleep(forTimeInterval: 2)
-//
-//            DispatchQueue.main.async { [weak self] in
-//                self?.reload()
-//                self?.productListCollectionView.refreshControl?.endRefreshing()
-//            }
-//        }
-
-        //        DispatchQueue.global().async { [weak self] in
-        //            self?.list.removeAll()
-        //            self?.receiveData()
-        //            Thread.sleep(forTimeInterval: 2)
-        //
-        //            DispatchQueue.main.async { [weak self] in
-        //                self?.reload()
-        //                self?.productListCollectionView.refreshControl?.endRefreshing()
-        //            }
-        //        }
     }
 }
 
@@ -191,6 +169,7 @@ extension ProductListViewController: UICollectionViewDelegate {
     
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        print("willDisplayCell")
         if indexPath.row == list.count - 10 && !self.isLoading {
             loadMoreData()
         }
