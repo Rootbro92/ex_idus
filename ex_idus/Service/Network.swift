@@ -32,16 +32,10 @@ class Network {
     }
     
     func request<T: Decodable>(with url: String, decoder: T.Type, completion: @escaping (NetworkResponse) -> ()) {
-        //        AF.request(url).response { completion($0) }
         AF.request(url).response { response in
-            //            completion(response)
-            
-            //            200..<400 ~=
-            //            statusCode >= 200 && statusCode < 400
             guard let statusCode = response.response?.statusCode,
                 200..<400 ~= statusCode else {
                     completion(NetworkResponse(json: nil, error: .notFound, result: .failure))
-                    //completion(NetworkResponse(result: nil, error: .notFound))
                     return
             }
             

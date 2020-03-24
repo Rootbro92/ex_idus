@@ -29,8 +29,9 @@ class ProductListViewController: UIViewController {
     // 다른곳(파일)에서 사용안하면 무조건 private로 해놓는 습관 들어야됨
     var list : [Product] = []
     private var refreshControl = UIRefreshControl()
-    var isLoading = false
-    var loadingView: LoadingReusableView?
+    private var isLoading = false
+    private var loadingView: LoadingReusableView?
+    private var pageNum = 1
     
     //MARK: UI Properties
     
@@ -53,13 +54,14 @@ extension ProductListViewController {
         
         let baseUrl = "https://2jt4kq01ij.execute-api.ap-northeast-2.amazonaws.com"
         let path = "/prod/products"
-        Network.shared.request(with: baseUrl + path, decoder: ProductData.self) { [weak self] response in
+        let page = "?page=\(pageNum)"
+        Network.shared.request(with: baseUrl + path + page, decoder: ProductData.self) { [weak self] response in
             
             switch response.result {
             case .success:
                 //print(response.json as! ProductData)
                 let result = response.json as! ProductData
-                self?.list = result.body
+                self?.list.append(contentsOf: result.body)
                 self?.reload()
             case .failure:
                 guard response.error == nil else {
@@ -82,7 +84,6 @@ extension ProductListViewController {
         flowLayout.minimumInteritemSpacing = UI.itemSpacing
         flowLayout.minimumLineSpacing = UI.lineSpacing
         flowLayout.itemSize = CGSize(width: UI.itemWidth , height: UI.itemHeight)
-        flowLayout.footerReferenceSize = CGSize(width: productListCollectionView.bounds.size.width, height: 55)
         self.productListCollectionView.collectionViewLayout = flowLayout
     }
     
@@ -93,7 +94,6 @@ extension ProductListViewController {
         productListCollectionView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
         let loadingReusableNib = UINib(nibName: "LoadingReusableView", bundle: nil)
         productListCollectionView.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: LoadingReusableView.reuseIdentifier)
-        
     }
     
     func reload() {
@@ -106,6 +106,8 @@ extension ProductListViewController {
             self.isLoading = true
             DispatchQueue.global().asyncAfter(deadline: .now() + 2) { [weak self] in
                 DispatchQueue.main.async { [weak self] in
+                    self?.pageNum += 1
+                    self?.receiveData()
                     self?.reload()
                     self?.isLoading = false
                 }
@@ -125,6 +127,7 @@ extension ProductListViewController {
         //다른것도 다 바꿔
         DispatchQueue.global().asyncAfter(deadline: .now() + 2) { [weak self] in
             self?.list.removeAll(keepingCapacity: true)
+            self?.pageNum = 1
             self?.receiveData()
             
             DispatchQueue.main.async { [weak self] in
@@ -176,14 +179,7 @@ extension ProductListViewController: UICollectionViewDataSource {
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        print("referenceSizeForFooterInSection")
-        if self.isLoading {
-            return CGSize.zero
-        } else {
-            return CGSize(width: collectionView.bounds.size.width, height: UI.FooterViewHeight)
-        }
-    }
+    
 }
 
 //MARK:- CollectionView Delegate
@@ -195,7 +191,6 @@ extension ProductListViewController: UICollectionViewDelegate {
     
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print("willDisplayCell")
         if indexPath.row == list.count - 10 && !self.isLoading {
             loadMoreData()
         }
@@ -212,12 +207,14 @@ extension ProductListViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+        //print("willDisplaySupplementaryView")
         if elementKind == UICollectionView.elementKindSectionFooter {
             self.loadingView?.activityIndicator.startAnimating()
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
+        //print("didEndDisplayingSupplementaryView")
         if elementKind == UICollectionView.elementKindSectionFooter {
             self.loadingView?.activityIndicator.stopAnimating()
         }
@@ -227,5 +224,17 @@ extension ProductListViewController: UICollectionViewDelegate {
     
 }
 
+// MARK:- CollectionView Delegate FlowLayout
+extension ProductListViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        //print("referenceSizeForFooterInSection \(self.isLoading)")
+        if self.isLoading {
+            return CGSize.zero
+        } else {
+            return CGSize(width: collectionView.bounds.size.width, height: UI.FooterViewHeight)
+        }
+    }
+}
 
 
