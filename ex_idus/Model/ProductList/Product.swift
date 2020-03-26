@@ -23,11 +23,4 @@ struct Product: Codable{
         case id, title, seller
         case thumb = "thumbnail_520"
     }
-    
-    init(id: Int, thumb: String, title: String, seller: String) {
-        self.id = id
-        self.thumb = thumb
-        self.title = title
-        self.seller = seller
-    }
 }

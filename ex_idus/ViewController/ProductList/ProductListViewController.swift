@@ -35,11 +35,17 @@ class ProductListViewController: UIViewController {
     @IBOutlet weak var productListCollectionView: UICollectionView!
     private var refreshControl = UIRefreshControl()
     private var loadingView: LoadingReusableView?
+    private var logoImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "logo"))
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
     
     //MARK: Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        showLoading(true)
         receiveData()
         setupUI()
     }
@@ -82,7 +88,7 @@ extension ProductListViewController {
     
     private func receiveData(page: Int = 1) {
         
-        showLoading(true)
+        
         Network.shared.request(target: .productList(page: page), decoder: ProductData.self) { [weak self] response in
             switch response.result {
             case .success:
@@ -118,6 +124,7 @@ extension ProductListViewController {
     }
     
     private func setupUI() {
+        navigationItem.titleView = logoImageView
         setupFlowLayout()
         productListCollectionView.delegate = self
         productListCollectionView.dataSource = self
@@ -133,7 +140,6 @@ extension ProductListViewController {
     }
     
     private func showLoading(_ isLoad: Bool) {
-        
         if isLoad {
             productListCollectionView.refreshControl?.beginRefreshing()
             loadingView?.activityIndicator.startAnimating()
@@ -141,12 +147,10 @@ extension ProductListViewController {
             productListCollectionView.refreshControl?.endRefreshing()
             loadingView?.activityIndicator.stopAnimating()
         }
-        
     }
     
     
     private func loadMoreData() {
-        showLoading(true)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
             guard let self = self else { return }
             self.pageNum += 1
@@ -203,6 +207,7 @@ extension ProductListViewController: UICollectionViewDelegate {
             let aFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: LoadingReusableView.reuseIdentifier, for: indexPath) as! LoadingReusableView
             loadingView = aFooterView
             loadingView?.backgroundColor = UIColor.clear
+            loadingView?.activityIndicator.startAnimating()
             return aFooterView
         }
         return UICollectionReusableView()

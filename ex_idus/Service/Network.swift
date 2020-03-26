@@ -59,7 +59,6 @@ class Network {
         provider.request(target) { result in
             switch result {
             case .success(let response):
-                
                 guard response.statusCode >= 200 && response.statusCode < 400 else {
                     completion(NetworkResponse(json: nil, error: .statusCode(response), result: .failure))
                     return

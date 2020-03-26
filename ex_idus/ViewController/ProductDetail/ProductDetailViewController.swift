@@ -12,8 +12,24 @@ class ProductDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        receiveData()
+    }
+    
+    private func receiveData(id: Int = 1) {
+        
+        Network.shared.request(target: .productDetail(id: id), decoder: ProductDetailData.self) { [weak self] response in
+            switch response.result {
+            case .success:
+                let result = response.json as! ProductDetailData
+                print(result)
+            case .failure:
+                guard response.error == nil else {
+                    print(response.error!)
+                    return
+                }
+            }
+        }
     }
 
 }

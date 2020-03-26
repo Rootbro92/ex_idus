@@ -11,6 +11,7 @@ import Moya
 
 enum Idus {
     case productList(page: Int)
+    case productDetail(id: Int)
 }
 
 extension Idus: TargetType {
@@ -20,12 +21,16 @@ extension Idus: TargetType {
         switch self {
         case .productList:
             return "/products"
+        case .productDetail(let id):
+            return "/products/\(id)"
         }
     }
     
     var method: Moya.Method {
         switch self {
         case .productList:
+            return .get
+        case .productDetail:
             return .get
         }
     }
@@ -34,6 +39,8 @@ extension Idus: TargetType {
         switch self {
         case .productList:
             return "test data".data(using: .utf8)!
+        case .productDetail:
+            return "test data".data(using: .utf8)!
         }
     }
     
@@ -41,6 +48,8 @@ extension Idus: TargetType {
         switch self {
         case .productList(let page):
             return .requestParameters(parameters: ["page" : page], encoding: URLEncoding.queryString)
+        case .productDetail(let id):
+            return .requestParameters(parameters: ["id" : id], encoding: URLEncoding.queryString)
         }
     }
     
