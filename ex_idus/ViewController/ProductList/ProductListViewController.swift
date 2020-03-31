@@ -24,9 +24,6 @@ class ProductListViewController: UIViewController {
     
     //MARK: Properties
     
-    
-    //승진: refreshcontroller만 private를 한 이유?
-    // 다른곳(파일)에서 사용안하면 무조건 private로 해놓는 습관 들어야됨
     private var list : [Product] = []
     private var pageNum = 1
     
@@ -192,9 +189,13 @@ extension ProductListViewController: UICollectionViewDataSource {
 
 extension ProductListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row)
+        guard let dvc = self.storyboard?.instantiateViewController(withIdentifier: "ProductDetailViewController") as? ProductDetailViewController else {
+            return
+        }
+        dvc.modalPresentationStyle = .fullScreen
+        dvc.id = list[indexPath.item].id
+        present(dvc, animated: true)
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if indexPath.row == list.count - 2 {

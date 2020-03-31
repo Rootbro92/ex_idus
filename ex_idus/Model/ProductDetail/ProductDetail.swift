@@ -31,4 +31,16 @@ struct ProductDetail: Codable {
         case thumb = "thumbnail_720"
         case thumbList = "thumbnail_list_320"
     }
+    
+    init() {
+        self.discountCost = ""
+        self.cost = ""
+        self.seller = ""
+        self.description = ""
+        self.discountRate = ""
+        self.id = 0
+        self.thumb = ""
+        self.thumbList = ""
+        self.title = ""
+    }
 }
