@@ -149,6 +149,7 @@
                                                             </collectionViewCellContentView>
                                                             <size key="customSize" width="414" height="283"/>
                                                             <connections>
+                                                                <outlet property="progressView" destination="EAq-Oa-vIk" id="Nay-L8-8jm"/>
                                                                 <outlet property="thumb" destination="6FR-Pz-jSv" id="XoD-zS-mpX"/>
                                                             </connections>
                                                         </collectionViewCell>

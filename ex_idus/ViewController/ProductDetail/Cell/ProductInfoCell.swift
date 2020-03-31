@@ -23,6 +23,7 @@ class ProductInfoCell: UITableViewCell {
         }
     }
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

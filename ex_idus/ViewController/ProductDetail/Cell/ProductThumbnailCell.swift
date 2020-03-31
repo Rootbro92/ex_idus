@@ -46,6 +46,7 @@ class ProductThumbnailCell: UITableViewCell {
         self.thumbnailCollectionView.collectionViewLayout = flowLayout
     }
     
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

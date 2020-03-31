@@ -15,6 +15,7 @@ enum ModelItemType {
     case description
 }
  
+
 protocol ModelItem {
     var type: ModelItemType { get }
 }
