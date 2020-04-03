@@ -102,7 +102,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BYP-Oo-Sb7">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="758"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -136,15 +136,9 @@
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6FR-Pz-jSv">
                                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="283"/>
                                                                     </imageView>
-                                                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="EAq-Oa-vIk">
-                                                                        <rect key="frame" x="20" y="261" width="374" height="2"/>
-                                                                    </progressView>
                                                                 </subviews>
                                                                 <constraints>
                                                                     <constraint firstAttribute="bottom" secondItem="6FR-Pz-jSv" secondAttribute="bottom" id="8v4-eD-ZBW"/>
-                                                                    <constraint firstAttribute="trailing" secondItem="EAq-Oa-vIk" secondAttribute="trailing" constant="20" id="Ccw-s6-76Z"/>
-                                                                    <constraint firstItem="EAq-Oa-vIk" firstAttribute="leading" secondItem="e9R-TL-hsb" secondAttribute="leading" constant="20" id="LAR-8b-pem"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="EAq-Oa-vIk" secondAttribute="bottom" constant="20" id="TUM-Eg-eSX"/>
                                                                     <constraint firstAttribute="trailing" secondItem="6FR-Pz-jSv" secondAttribute="trailing" id="cyL-Ul-gcP"/>
                                                                     <constraint firstItem="6FR-Pz-jSv" firstAttribute="top" secondItem="e9R-TL-hsb" secondAttribute="top" id="nCs-Ea-5TY"/>
                                                                     <constraint firstItem="6FR-Pz-jSv" firstAttribute="leading" secondItem="e9R-TL-hsb" secondAttribute="leading" id="sBF-HK-fkF"/>
@@ -152,21 +146,32 @@
                                                             </collectionViewCellContentView>
                                                             <size key="customSize" width="414" height="283"/>
                                                             <connections>
-                                                                <outlet property="progressView" destination="EAq-Oa-vIk" id="Nay-L8-8jm"/>
                                                                 <outlet property="thumb" destination="6FR-Pz-jSv" id="XoD-zS-mpX"/>
                                                             </connections>
                                                         </collectionViewCell>
                                                     </cells>
                                                 </collectionView>
+                                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Q75-N1-P7Q">
+                                                    <rect key="frame" x="30" y="275" width="354" height="5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="5" id="sRs-Zh-ZBu"/>
+                                                    </constraints>
+                                                    <color key="progressTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="trackTintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </progressView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Ua4-2A-lJI" firstAttribute="top" secondItem="jho-aH-EH8" secondAttribute="top" id="1ai-Bh-ff3"/>
                                                 <constraint firstAttribute="bottom" secondItem="Ua4-2A-lJI" secondAttribute="bottom" id="D2E-sf-Y6v"/>
                                                 <constraint firstAttribute="trailing" secondItem="Ua4-2A-lJI" secondAttribute="trailing" id="S4R-TJ-Ws7"/>
+                                                <constraint firstAttribute="trailing" secondItem="Q75-N1-P7Q" secondAttribute="trailing" constant="30" id="d17-xH-TEL"/>
+                                                <constraint firstAttribute="bottom" secondItem="Q75-N1-P7Q" secondAttribute="bottom" constant="20" id="goI-Gj-Jcw"/>
+                                                <constraint firstItem="Q75-N1-P7Q" firstAttribute="leading" secondItem="jho-aH-EH8" secondAttribute="leading" constant="30" id="ssa-ey-QvP"/>
                                                 <constraint firstItem="Ua4-2A-lJI" firstAttribute="leading" secondItem="jho-aH-EH8" secondAttribute="leading" id="zB3-sj-q8L"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="progressView" destination="Q75-N1-P7Q" id="OTS-kJ-y33"/>
                                             <outlet property="thumbnailCollectionView" destination="Ua4-2A-lJI" id="Q5a-4N-IZU"/>
                                         </connections>
                                     </tableViewCell>
@@ -184,24 +189,48 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UQf-mH-8ur">
-                                                    <rect key="frame" x="35" y="57" width="344" height="48"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                                    <rect key="frame" x="35" y="57" width="344" height="42"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="35"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Qe-ao-gq0">
-                                                    <rect key="frame" x="35" y="135" width="344" height="32"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="lRw-J9-AUM">
+                                                    <rect key="frame" x="40" y="129" width="208.5" height="43"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="13j-4a-EIS">
+                                                            <rect key="frame" x="0.0" y="0.0" width="59.5" height="43"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                            <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="agS-JR-WGe">
+                                                            <rect key="frame" x="74.5" y="0.0" width="59.5" height="43"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalCompressionResistancePriority="749" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Qe-ao-gq0">
+                                                            <rect key="frame" x="149" y="0.0" width="59.5" height="43"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="agS-JR-WGe" firstAttribute="top" secondItem="lRw-J9-AUM" secondAttribute="top" id="3cw-HD-kMf"/>
+                                                        <constraint firstAttribute="bottom" secondItem="agS-JR-WGe" secondAttribute="bottom" id="RSD-Ww-S5H"/>
+                                                        <constraint firstAttribute="bottom" secondItem="5Qe-ao-gq0" secondAttribute="bottom" id="S3g-Bp-PUx"/>
+                                                        <constraint firstItem="13j-4a-EIS" firstAttribute="top" secondItem="lRw-J9-AUM" secondAttribute="top" id="WMf-1X-umQ"/>
+                                                        <constraint firstAttribute="bottom" secondItem="13j-4a-EIS" secondAttribute="bottom" id="ZzX-1z-Uur"/>
+                                                        <constraint firstItem="5Qe-ao-gq0" firstAttribute="top" secondItem="lRw-J9-AUM" secondAttribute="top" id="fEH-wO-7AL"/>
+                                                    </constraints>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="5Qe-ao-gq0" firstAttribute="top" secondItem="UQf-mH-8ur" secondAttribute="bottom" constant="30" id="2p1-cB-Yor"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="5Qe-ao-gq0" secondAttribute="trailing" constant="15" id="3Sw-K4-iXq"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="5Qe-ao-gq0" secondAttribute="bottom" constant="20" id="9XZ-Ek-Frv"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="lRw-J9-AUM" secondAttribute="bottom" constant="15" id="3nt-UK-wdr"/>
                                                 <constraint firstItem="UQf-mH-8ur" firstAttribute="leading" secondItem="cqC-kU-hFl" secondAttribute="leadingMargin" constant="15" id="9yD-P0-m9T"/>
-                                                <constraint firstItem="5Qe-ao-gq0" firstAttribute="leading" secondItem="cqC-kU-hFl" secondAttribute="leadingMargin" constant="15" id="Del-uf-VAA"/>
+                                                <constraint firstItem="lRw-J9-AUM" firstAttribute="leading" secondItem="cqC-kU-hFl" secondAttribute="leadingMargin" constant="20" id="A9T-6y-8zk"/>
+                                                <constraint firstItem="lRw-J9-AUM" firstAttribute="top" secondItem="UQf-mH-8ur" secondAttribute="bottom" constant="30" id="FHD-2F-5WO"/>
                                                 <constraint firstItem="j5Y-gk-DNJ" firstAttribute="top" secondItem="cqC-kU-hFl" secondAttribute="topMargin" constant="15" id="XlW-kz-rMv"/>
                                                 <constraint firstItem="j5Y-gk-DNJ" firstAttribute="leading" secondItem="cqC-kU-hFl" secondAttribute="leadingMargin" constant="15" id="ZLU-3Y-lP2"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="UQf-mH-8ur" secondAttribute="trailing" constant="15" id="dgm-c5-bus"/>
@@ -211,6 +240,8 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="cost" destination="5Qe-ao-gq0" id="bnL-LJ-kP9"/>
+                                            <outlet property="discountCostLabel" destination="agS-JR-WGe" id="0VH-aU-uJZ"/>
+                                            <outlet property="discountRateLabel" destination="13j-4a-EIS" id="Khw-Ub-poK"/>
                                             <outlet property="seller" destination="j5Y-gk-DNJ" id="oOR-e6-bqg"/>
                                             <outlet property="title" destination="UQf-mH-8ur" id="yHY-fS-JmZ"/>
                                         </connections>
@@ -269,22 +300,23 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="rQQ-5w-jSk" firstAttribute="bottom" secondItem="Qvm-Jz-fLV" secondAttribute="bottom" constant="10" id="3yr-8F-LQK"/>
                             <constraint firstItem="Qvm-Jz-fLV" firstAttribute="leading" secondItem="rQQ-5w-jSk" secondAttribute="leading" constant="20" id="5js-Xn-0AX"/>
                             <constraint firstItem="BYP-Oo-Sb7" firstAttribute="leading" secondItem="rQQ-5w-jSk" secondAttribute="leading" id="Dtg-tG-9Hd"/>
                             <constraint firstItem="rQQ-5w-jSk" firstAttribute="trailing" secondItem="w8j-1p-BgB" secondAttribute="trailing" constant="10" id="VfI-Pi-Se0"/>
-                            <constraint firstAttribute="bottom" secondItem="BYP-Oo-Sb7" secondAttribute="bottom" id="Yr2-gT-EOQ"/>
                             <constraint firstItem="rQQ-5w-jSk" firstAttribute="trailing" secondItem="BYP-Oo-Sb7" secondAttribute="trailing" id="duI-iF-7Cq"/>
+                            <constraint firstItem="Qvm-Jz-fLV" firstAttribute="top" secondItem="BYP-Oo-Sb7" secondAttribute="bottom" constant="10" id="j9E-yw-6ZK"/>
                             <constraint firstItem="rQQ-5w-jSk" firstAttribute="trailing" secondItem="Qvm-Jz-fLV" secondAttribute="trailing" constant="20" id="qRl-Ri-hNt"/>
-                            <constraint firstItem="BYP-Oo-Sb7" firstAttribute="top" secondItem="Dd4-Rn-sOr" secondAttribute="top" id="qwC-pa-OgA"/>
+                            <constraint firstItem="BYP-Oo-Sb7" firstAttribute="top" secondItem="rQQ-5w-jSk" secondAttribute="top" id="qwC-pa-OgA"/>
                             <constraint firstItem="w8j-1p-BgB" firstAttribute="top" secondItem="rQQ-5w-jSk" secondAttribute="top" constant="10" id="suc-lN-6Qc"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="rQQ-5w-jSk"/>
                     </view>
                     <connections>
                         <outlet property="productDetailTableView" destination="BYP-Oo-Sb7" id="PFK-iO-1RX"/>
+                        <outlet property="purchaseButton" destination="Qvm-Jz-fLV" id="SOK-GR-nMq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G1L-3T-a6O" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

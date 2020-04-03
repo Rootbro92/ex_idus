@@ -9,23 +9,29 @@
 import UIKit
 
 class ProductDetailViewController: UIViewController {
-    //MARK: - Property
+    // MARK: - Property
     var id: Int = 0
-    var viewModel: MutipleCellViewModel!
-    var data: ProductDetail = ProductDetail()
+    var detailData: ProductDetail = ProductDetail()
     
-    //MARK: - UI Property
+    // MARK: - UI Property
     @IBOutlet weak var productDetailTableView: UITableView!
+    @IBOutlet weak var purchaseButton: UIButton!
     
-    //MARK: - Methods
+    // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         receiveData(id: id)
+        productDetailTableView.backgroundColor = AppTheme.color.main
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
     }
     
     private func setupUI() {
         productDetailTableView.delegate = self
+        productDetailTableView.dataSource = self
         productDetailTableView.estimatedRowHeight = 50
         productDetailTableView.rowHeight = UITableView.automaticDimension
     }
@@ -39,12 +45,7 @@ class ProductDetailViewController: UIViewController {
             switch response.result {
             case .success:
                 let result = response.json as! ProductDetailData
-                self?.viewModel = MutipleCellViewModel(items: [
-                    Thumb(thumb: result.body[0].thumb, thumbList: result.body[0].thumbList.components(separatedBy: "#")),
-                    ProductInfo(cost: result.body[0].cost , seller: result.body[0].seller, title: result.body[0].title),
-                    Description(description: result.body[0].description)
-                ])
-                self?.productDetailTableView.dataSource = self?.viewModel
+                self?.detailData = result.body.first!
                 self?.reload()
                 
             case .failure:
@@ -56,17 +57,8 @@ class ProductDetailViewController: UIViewController {
         }
     }
     
-    
-    //MARK: - IBAction
+    // MARK: - IBAction
     @IBAction func dismissAction(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
 }
-
-
-//MARK: - TableView Delegate
-extension ProductDetailViewController: UITableViewDelegate {
-    
-}
-
-

@@ -8,17 +8,17 @@
 
 import Foundation
 
-struct ProductData: Codable{
+struct ProductData: Codable {
     var statusCode: Int
     var body: [Product]
 }
 
-struct Product: Codable{
+struct Product: Codable {
     var id: Int
     var thumb: String
     var title: String
     var seller: String
-    
+
     enum CodingKeys: String, CodingKey {
         case id, title, seller
         case thumb = "thumbnail_520"

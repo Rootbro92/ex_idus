@@ -7,6 +7,7 @@ target 'ex_idus' do
   pod 'Alamofire', '~> 5.0.0-rc.3'
   pod 'Kingfisher'
   pod 'Moya', '~> 14.0'
+  pod 'SwiftLint'
   # Pods for ex_idus
 
 end

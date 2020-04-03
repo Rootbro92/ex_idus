@@ -15,7 +15,7 @@ enum Idus {
 }
 
 extension Idus: TargetType {
-    
+
     var baseURL: URL { return URL(string: "https://2jt4kq01ij.execute-api.ap-northeast-2.amazonaws.com/prod")! }
     var path: String {
         switch self {
@@ -25,37 +25,32 @@ extension Idus: TargetType {
             return "/products/\(id)"
         }
     }
-    
+
     var method: Moya.Method {
         switch self {
-        case .productList:
-            return .get
-        case .productDetail:
+        case .productList, .productDetail:
             return .get
         }
     }
-    
+
     var sampleData: Data {
         switch self {
-        case .productList:
-            return "test data".data(using: .utf8)!
-        case .productDetail:
+        case .productList, .productDetail:
             return "test data".data(using: .utf8)!
         }
     }
-    
+
     var task: Task {
         switch self {
         case .productList(let page):
-            return .requestParameters(parameters: ["page" : page], encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: ["page": page], encoding: URLEncoding.queryString)
         case .productDetail(let id):
-            return .requestParameters(parameters: ["id" : id], encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: ["id": id], encoding: URLEncoding.queryString)
         }
     }
-    
-    var headers: [String : String]? {
+
+    var headers: [String: String]? {
         return ["Content-type": "application/json"]
     }
-    
-     
+
 }

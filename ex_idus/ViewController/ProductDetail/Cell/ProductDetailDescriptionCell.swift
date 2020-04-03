@@ -10,26 +10,21 @@ import UIKit
 
 class ProductDetailDescriptionCell: UITableViewCell {
 
-    
     @IBOutlet weak var detailDescription: UILabel!
-    
-    var item: ModelItem? {
-        didSet {
-            guard let item = item as? Description else { return }
-            self.detailDescription.text = item.description
-        }
-    }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
-    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+
+    func configure(description: String) {
+        self.detailDescription.text = description
     }
 
 }

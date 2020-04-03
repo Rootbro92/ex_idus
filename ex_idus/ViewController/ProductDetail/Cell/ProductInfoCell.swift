@@ -9,30 +9,34 @@
 import UIKit
 
 class ProductInfoCell: UITableViewCell {
-
+    
     @IBOutlet weak var seller: UILabel!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var cost: UILabel!
     
-    var item: ModelItem? {
-        didSet {
-            guard let item = item as? ProductInfo else { return }
-            self.seller.text = item.seller
-            self.title.text = item.title
-            self.cost.text = item.cost
-        }
-    }
-    
-    
+    @IBOutlet weak var discountCostLabel: UILabel!
+    @IBOutlet weak var discountRateLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
-
+    func configure(seller: String, title: String, cost: String, discountCost: String?, discountRate: String?) {
+        self.seller.text = seller
+        self.title.text = title
+        self.cost.text = cost
+        guard let discountCostText = discountCost, let discountRateText = discountRate else {
+            self.discountRateLabel.isHidden = true
+            self.discountCostLabel.isHidden = true
+            return
+        }
+        self.cost.attributedText = cost.Strikethrough()
+        self.discountCostLabel.text = discountCostText
+        self.discountRateLabel.text = discountRateText
+    }
 }

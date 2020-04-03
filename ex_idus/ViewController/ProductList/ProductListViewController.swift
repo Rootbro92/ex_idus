@@ -9,11 +9,10 @@
 import UIKit
 import Alamofire
 
-
 class ProductListViewController: UIViewController {
-    
-    //MARK: Constant
-    
+
+    // MARK: Constant
+
     struct UI {
         static let itemSpacing: CGFloat = 7
         static let lineSpacing: CGFloat = 14
@@ -21,14 +20,14 @@ class ProductListViewController: UIViewController {
         static let itemHeight: CGFloat = itemWidth * 1.5
         static let FooterViewHeight: CGFloat = 55
     }
-    
-    //MARK: Properties
-    
-    private var list : [Product] = []
+
+    // MARK: Properties
+
+    private var list: [Product] = []
     private var pageNum = 1
-    
-    //MARK: UI Properties
-    
+
+    // MARK: UI Properties
+
     @IBOutlet weak var productListCollectionView: UICollectionView!
     private var refreshControl = UIRefreshControl()
     private var loadingView: LoadingReusableView?
@@ -37,9 +36,9 @@ class ProductListViewController: UIViewController {
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
-    
-    //MARK: Life Cycle
-    
+
+    // MARK: Life Cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         showLoading(true)
@@ -48,7 +47,7 @@ class ProductListViewController: UIViewController {
     }
 }
 
-//MARK:- Methods
+// MARK: - Methods
 
 extension ProductListViewController {
     //    private func receiveData(page: Int = 1) {
@@ -82,10 +81,9 @@ extension ProductListViewController {
     //            }
     //        }
     //    }
-    
+
     private func receiveData(page: Int = 1) {
-        
-        
+
         Network.shared.request(target: .productList(page: page), decoder: ProductData.self) { [weak self] response in
             switch response.result {
             case .success:
@@ -98,7 +96,7 @@ extension ProductListViewController {
                 self?.showLoading(false)
                 guard response.error == nil else {
                     print(response.error!)
-                    
+
                     //                    switch response.error! {
                     ////                    case .decode:
                     ////                        print("decode Error")
@@ -110,16 +108,16 @@ extension ProductListViewController {
             }
         }
     }
-    
+
     private func setupFlowLayout() {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.sectionInset = UIEdgeInsets.zero
         flowLayout.minimumInteritemSpacing = UI.itemSpacing
         flowLayout.minimumLineSpacing = UI.lineSpacing
-        flowLayout.itemSize = CGSize(width: UI.itemWidth , height: UI.itemHeight)
+        flowLayout.itemSize = CGSize(width: UI.itemWidth, height: UI.itemHeight)
         self.productListCollectionView.collectionViewLayout = flowLayout
     }
-    
+
     private func setupUI() {
         navigationItem.titleView = logoImageView
         setupFlowLayout()
@@ -130,12 +128,12 @@ extension ProductListViewController {
         let loadingReusableNib = UINib(nibName: "LoadingReusableView", bundle: nil)
         productListCollectionView.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: LoadingReusableView.reuseIdentifier)
     }
-    
+
     private func reload() {
         productListCollectionView.reloadData()
         productListCollectionView.refreshControl?.endRefreshing()
     }
-    
+
     private func showLoading(_ isLoad: Bool) {
         if isLoad {
             productListCollectionView.refreshControl?.beginRefreshing()
@@ -145,8 +143,7 @@ extension ProductListViewController {
             loadingView?.activityIndicator.stopAnimating()
         }
     }
-    
-    
+
     private func loadMoreData() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
             guard let self = self else { return }
@@ -155,8 +152,7 @@ extension ProductListViewController {
             self.reload()
         }
     }
-    
-    
+
     @objc func refresh() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
             self?.list.removeAll(keepingCapacity: true) //메모리 주소 킵
@@ -167,15 +163,14 @@ extension ProductListViewController {
     }
 }
 
-
-//MARK:- CollectionView DataSource
+// MARK: - CollectionView DataSource
 
 extension ProductListViewController: UICollectionViewDataSource {
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return list.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.reuseIdentifier, for: indexPath) as? ProductCell else {
             return UICollectionViewCell()
@@ -185,7 +180,7 @@ extension ProductListViewController: UICollectionViewDataSource {
     }
 }
 
-//MARK:- CollectionView Delegate
+// MARK: - CollectionView Delegate
 
 extension ProductListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -196,13 +191,13 @@ extension ProductListViewController: UICollectionViewDelegate {
         dvc.id = list[indexPath.item].id
         present(dvc, animated: true)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if indexPath.row == list.count - 2 {
             loadMoreData()
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionFooter {
             let aFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: LoadingReusableView.reuseIdentifier, for: indexPath) as! LoadingReusableView
@@ -215,18 +210,15 @@ extension ProductListViewController: UICollectionViewDelegate {
     }
 }
 
-// MARK:- CollectionView Delegate FlowLayout
+// MARK: - CollectionView Delegate FlowLayout
 extension ProductListViewController: UICollectionViewDelegateFlowLayout {
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        
-        if let isLoading = self.loadingView?.activityIndicator.isAnimating, isLoading{
+
+        if let isLoading = self.loadingView?.activityIndicator.isAnimating, isLoading {
             return CGSize.zero
         } else {
             return CGSize(width: collectionView.bounds.size.width, height: UI.FooterViewHeight)
         }
     }
 }
-
-
-

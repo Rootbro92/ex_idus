@@ -25,15 +25,15 @@ struct NetworkResponse {
 }
 
 class Network {
-    
+
     static let shared = Network()
-    
+
     let provider = MoyaProvider<Idus>()
-    
+
     private init() {
-        
+
     }
-    
+
     //    func request<T: Decodable>(with url: String, decoder: T.Type, completion: @escaping (NetworkResponse) -> ()) {
     //        AF.request(url).response { response in
     //            guard let statusCode = response.response?.statusCode,
@@ -53,9 +53,9 @@ class Network {
     //            }
     //        }
     //    }
-    
-    func request<T: Decodable>(target: Idus, decoder: T.Type, completion: @escaping (NetworkResponse) -> ()) {
-        
+
+    func request<T: Decodable>(target: Idus, decoder: T.Type, completion: @escaping (NetworkResponse) -> Void) {
+
         provider.request(target) { result in
             switch result {
             case .success(let response):
@@ -63,7 +63,7 @@ class Network {
                     completion(NetworkResponse(json: nil, error: .statusCode(response), result: .failure))
                     return
                 }
-                
+
                 do {
                     let result = try JSONDecoder().decode(T.self, from: response.data)
                     completion(NetworkResponse(json: result, error: nil, result: .success))
@@ -79,7 +79,7 @@ class Network {
                 completion(NetworkResponse(json: nil, error: .some(error), result: .failure))
             }
         }
-        
+
         //        AF.request(url).response { response in
         //            guard let statusCode = response.response?.statusCode,
         //                200..<400 ~= statusCode else {
@@ -98,12 +98,11 @@ class Network {
         //            }
         //        }
     }
-    
-    
+
     //    func receiveData() {
     //        let baseUrl = "https://2jt4kq01ij.execute-api.ap-northeast-2.amazonaws.com"
     //        let path = "/prod/products"
-    
+
     //        AF.request(baseUrl + path).response { [weak self] response in
     //            switch response.result {
     //            case .success(let data):
@@ -122,5 +121,5 @@ class Network {
     //            }
     //        }
     //    }
-    
+
 }

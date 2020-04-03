@@ -13,12 +13,12 @@ class ProductCell: UICollectionViewCell {
     struct UI {
         static let imageRadius: CGFloat = 14
     }
-    
+
     @IBOutlet weak var productImage: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var sellerLabel: UILabel!
-    
-    func configure(with product: Product){
+
+    func configure(with product: Product) {
         let url = URL(string: product.thumb)
         productImage.kf.setImage(with: url)
         productImage.clipsToBounds = true

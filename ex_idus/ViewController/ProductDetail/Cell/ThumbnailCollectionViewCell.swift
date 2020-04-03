@@ -9,11 +9,10 @@
 import UIKit
 
 class ThumbnailCollectionViewCell: UICollectionViewCell {
-    
-    @IBOutlet weak var progressView: UIProgressView!
+
     @IBOutlet weak var thumb: UIImageView!
-    
-    func configure(with thumbUrl: String){
+
+    func configure(with thumbUrl: String) {
         let url = URL(string: thumbUrl)
         thumb.kf.setImage(with: url)
     }

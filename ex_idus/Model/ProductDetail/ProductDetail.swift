@@ -23,7 +23,7 @@ struct ProductDetail: Codable {
     var thumb: String
     var thumbList: String
     var title: String
-    
+
     enum CodingKeys: String, CodingKey {
         case cost, seller, description, id, title
         case discountCost = "discount_cost"
@@ -31,7 +31,7 @@ struct ProductDetail: Codable {
         case thumb = "thumbnail_720"
         case thumbList = "thumbnail_list_320"
     }
-    
+
     init() {
         self.discountCost = ""
         self.cost = ""
