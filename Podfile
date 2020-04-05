@@ -8,6 +8,7 @@ target 'ex_idus' do
   pod 'Kingfisher'
   pod 'Moya', '~> 14.0'
   pod 'SwiftLint'
+  pod 'SnapKit', '~> 5.0.0'
   # Pods for ex_idus
 
 end

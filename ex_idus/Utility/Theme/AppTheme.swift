@@ -10,5 +10,6 @@
 import Foundation
 
 struct AppTheme {
-   static let color = Color()
+    static let color = Color()
+    static let font = Font()
 }

@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import CoreGraphics
 
 class ProductListViewController: UIViewController {
 
@@ -33,11 +34,10 @@ class ProductListViewController: UIViewController {
     private var loadingView: LoadingReusableView?
     private var logoImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "logo"))
-        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
 
-    // MARK: Life Cycle
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -127,6 +127,7 @@ extension ProductListViewController {
         productListCollectionView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
         let loadingReusableNib = UINib(nibName: "LoadingReusableView", bundle: nil)
         productListCollectionView.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: LoadingReusableView.reuseIdentifier)
+        
     }
 
     private func reload() {

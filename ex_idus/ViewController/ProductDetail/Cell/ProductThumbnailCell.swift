@@ -85,8 +85,6 @@ extension ProductThumbnailCell: UICollectionViewDelegate {
 
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
       let page = Int(targetContentOffset.pointee.x / self.frame.width)
-      //self.pageControl.currentPage = page
-        //print(page)
         setProgress(page: page)
     }
 }

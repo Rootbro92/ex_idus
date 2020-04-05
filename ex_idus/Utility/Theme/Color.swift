@@ -11,6 +11,6 @@ import UIKit
 
 struct Color {
     var main: UIColor {
-        return .black
+        return .white
     }
 }

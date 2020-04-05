@@ -17,7 +17,8 @@ class ProductDetailViewController: UIViewController {
     @IBOutlet weak var productDetailTableView: UITableView!
     @IBOutlet weak var purchaseButton: UIButton!
     
-    // MARK: - Methods
+    
+    // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -26,14 +27,22 @@ class ProductDetailViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
+        UIButton.animate(withDuration: 1.5,
+        delay: 0.2,
+        usingSpringWithDamping: 1.0,
+        initialSpringVelocity: 1.0,
+        options: [.curveEaseInOut],
+        animations: {
+            self.purchaseButton.center.y -= 190 })
     }
     
+    // MARK: - Methods
     private func setupUI() {
         productDetailTableView.delegate = self
         productDetailTableView.dataSource = self
         productDetailTableView.estimatedRowHeight = 50
         productDetailTableView.rowHeight = UITableView.automaticDimension
+        purchaseButton.layer.cornerRadius = 15
     }
     
     private func reload() {
