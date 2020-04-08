@@ -287,12 +287,10 @@
                                     <action selector="dismissAction:" destination="hEm-sO-50C" eventType="touchUpInside" id="cXX-9g-fyS"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qvm-Jz-fLV">
-                                <rect key="frame" x="30" y="996" width="354" height="60"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qvm-Jz-fLV">
+                                <rect key="frame" x="30" y="826" width="353" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="4SV-nz-PK7"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
                                 <color key="tintColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <state key="normal" title="구매하기">
@@ -308,10 +306,7 @@
                             <constraint firstItem="BYP-Oo-Sb7" firstAttribute="leading" secondItem="rQQ-5w-jSk" secondAttribute="leading" id="Dtg-tG-9Hd"/>
                             <constraint firstItem="rQQ-5w-jSk" firstAttribute="trailing" secondItem="w8j-1p-BgB" secondAttribute="trailing" constant="10" id="VfI-Pi-Se0"/>
                             <constraint firstItem="rQQ-5w-jSk" firstAttribute="trailing" secondItem="BYP-Oo-Sb7" secondAttribute="trailing" id="duI-iF-7Cq"/>
-                            <constraint firstItem="Qvm-Jz-fLV" firstAttribute="leading" secondItem="rQQ-5w-jSk" secondAttribute="leading" constant="30" id="e4o-Y4-3kE"/>
-                            <constraint firstItem="rQQ-5w-jSk" firstAttribute="trailing" secondItem="Qvm-Jz-fLV" secondAttribute="trailing" constant="30" id="iqs-8S-Cdj"/>
                             <constraint firstAttribute="bottom" secondItem="BYP-Oo-Sb7" secondAttribute="bottom" id="j9E-yw-6ZK"/>
-                            <constraint firstItem="Qvm-Jz-fLV" firstAttribute="top" secondItem="BYP-Oo-Sb7" secondAttribute="bottom" constant="100" id="pyT-Re-J0t"/>
                             <constraint firstItem="BYP-Oo-Sb7" firstAttribute="top" secondItem="rQQ-5w-jSk" secondAttribute="top" id="qwC-pa-OgA"/>
                             <constraint firstItem="w8j-1p-BgB" firstAttribute="top" secondItem="rQQ-5w-jSk" secondAttribute="top" constant="10" id="suc-lN-6Qc"/>
                         </constraints>

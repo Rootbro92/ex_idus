@@ -7,8 +7,21 @@
 //
 
 import UIKit
+import SnapKit
 
 class ProductDetailViewController: UIViewController {
+    // MARK: - Constant
+    struct UI {
+        struct purchaesButton {
+            static let leading: CGFloat = 30
+            static let trailing: CGFloat = -30
+            static let height: CGFloat = 60
+            static let bottom: CGFloat = 160
+            static let connerRadius: CGFloat = 15
+            static let increaseAnimationCenterY: CGFloat = 190
+        }
+    }
+    
     // MARK: - Property
     var id: Int = 0
     var detailData: ProductDetail = ProductDetail()
@@ -17,8 +30,7 @@ class ProductDetailViewController: UIViewController {
     @IBOutlet weak var productDetailTableView: UITableView!
     @IBOutlet weak var purchaseButton: UIButton!
     
-    
-    // MARK: Life Cycle
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -33,16 +45,23 @@ class ProductDetailViewController: UIViewController {
         initialSpringVelocity: 1.0,
         options: [.curveEaseInOut],
         animations: {
-            self.purchaseButton.center.y -= 190 })
+            self.purchaseButton.center.y -= UI.purchaesButton.increaseAnimationCenterY }
+        )
     }
     
     // MARK: - Methods
     private func setupUI() {
         productDetailTableView.delegate = self
         productDetailTableView.dataSource = self
-        productDetailTableView.estimatedRowHeight = 50
+        //productDetailTableView.estimatedRowHeight = 50
         productDetailTableView.rowHeight = UITableView.automaticDimension
-        purchaseButton.layer.cornerRadius = 15
+        purchaseButton.layer.cornerRadius = UI.purchaesButton.connerRadius
+        self.purchaseButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().offset(UI.purchaesButton.trailing)
+            $0.leading.equalToSuperview().offset(UI.purchaesButton.leading)
+            $0.height.equalTo(UI.purchaesButton.height)
+            $0.bottom.equalToSuperview().offset(UI.purchaesButton.bottom)
+        }
     }
     
     private func reload() {

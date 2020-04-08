@@ -50,38 +50,6 @@ class ProductListViewController: UIViewController {
 // MARK: - Methods
 
 extension ProductListViewController {
-    //    private func receiveData(page: Int = 1) {
-    //
-    //        let baseUrl = "https://2jt4kq01ij.execute-api.ap-northeast-2.amazonaws.com"
-    //        let path = "/prod/products"
-    //        let page = "?page=\(page)"
-    //        showLoading(true)
-    //        Network.shared.request(with: baseUrl + path + page, decoder: ProductData.self) { [weak self] response in
-    //
-    //            switch response.result {
-    //            case .success:
-    //                //print(response.json as! ProductData)
-    //                let result = response.json as! ProductData
-    //                self?.list.append(contentsOf: result.body)
-    //                self?.reload()
-    //                self?.showLoading(false)
-    //            case .failure:
-    //                self?.showLoading(false)
-    //                guard response.error == nil else {
-    //                    print(response.error!)
-    //
-    ////                    switch response.error! {
-    //////                    case .decode:
-    //////                        print("decode Error")
-    //////                    case .notFound:
-    //////                        print("통신 에러")
-    //////                    }
-    //                    return
-    //                }
-    //            }
-    //        }
-    //    }
-
     private func receiveData(page: Int = 1) {
 
         Network.shared.request(target: .productList(page: page), decoder: ProductData.self) { [weak self] response in
@@ -96,13 +64,6 @@ extension ProductListViewController {
                 self?.showLoading(false)
                 guard response.error == nil else {
                     print(response.error!)
-
-                    //                    switch response.error! {
-                    ////                    case .decode:
-                    ////                        print("decode Error")
-                    ////                    case .notFound:
-                    ////                        print("통신 에러")
-                    ////                    }
                     return
                 }
             }
