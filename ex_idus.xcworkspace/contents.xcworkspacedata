@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workspace
    version = "1.0">
+   <Group
+      location = "group:/Users/Parkgeunhyeong/Desktop/git/ex_idus/ex_idus/ViewController/ProductList/Resources"
+      name = "Resources">
+      <Group
+         location = "group:Resources/Font"
+         name = "Font">
+         <FileRef
+            location = "group:Resources/Font/NotoSansCJKkr-Black.otf">
+         </FileRef>
+         <FileRef
+            location = "group:Resources/Font/NotoSansCJKkr-Bold.otf">
+         </FileRef>
+      </Group>
+      <FileRef
+         location = "group:Resources/Info.plist">
+      </FileRef>
+      <FileRef
+         location = "group:Resources/Assets.xcassets">
+      </FileRef>
+      <Group
+         location = "group:Resources"
+         name = "LaunchScreen.storyboard">
+         <FileRef
+            location = "group:Resources/Base.lproj/LaunchScreen.storyboard">
+         </FileRef>
+      </Group>
+   </Group>
    <FileRef
       location = "group:ex_idus.xcodeproj">
    </FileRef>

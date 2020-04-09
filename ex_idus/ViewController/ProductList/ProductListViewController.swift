@@ -55,7 +55,6 @@ extension ProductListViewController {
         Network.shared.request(target: .productList(page: page), decoder: ProductData.self) { [weak self] response in
             switch response.result {
             case .success:
-                //print(response.json as! ProductData)
                 let result = response.json as! ProductData
                 self?.list.append(contentsOf: result.body)
                 self?.reload()
@@ -117,7 +116,7 @@ extension ProductListViewController {
 
     @objc func refresh() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-            self?.list.removeAll(keepingCapacity: true) //메모리 주소 킵
+            self?.list.removeAll(keepingCapacity: true)
             self?.pageNum = 1
             self?.receiveData()
             self?.reload()

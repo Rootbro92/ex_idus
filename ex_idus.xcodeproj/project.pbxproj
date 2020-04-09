@@ -58,6 +58,11 @@
 		847512822439F1700095A5EA /* NotoSansCJKkr-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Black.otf"; sourceTree = "<group>"; };
 		847512832439F1710095A5EA /* NotoSansCJKkr-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Bold.otf"; sourceTree = "<group>"; };
 		847512862439F5E50095A5EA /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		8475128A243F5A870095A5EA /* NotoSansCJKkr-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSansCJKkr-Black.otf"; path = "ex_idus/ViewController/ProductList/Resources/Resources/Font/Resources/Font/NotoSansCJKkr-Black.otf"; sourceTree = "<group>"; };
+		8475128B243F5A870095A5EA /* NotoSansCJKkr-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSansCJKkr-Bold.otf"; path = "ex_idus/ViewController/ProductList/Resources/Resources/Font/Resources/Font/NotoSansCJKkr-Bold.otf"; sourceTree = "<group>"; };
+		8475128D243F5A870095A5EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
+		8475128E243F5A870095A5EA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
+		8475128F243F5A870095A5EA /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Resources/ex_idus/ViewController/ProductList/Resources/Resources/Resources/Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		848D206723FD85E8001CF01A /* ex_idus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ex_idus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		848D206A23FD85E8001CF01A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		848D207123FD85E8001CF01A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -92,26 +97,10 @@
 		8469A5A1240295D900F4A44E /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				846B092D241620F900E76080 /* ProductDetail */,
-				846B092C241620DF00E76080 /* ProductList */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		846B092C241620DF00E76080 /* ProductList */ = {
-			isa = PBXGroup;
-			children = (
+				84729EE9242D0B090067C813 /* ProductDetail.swift */,
 				8469A5A2240295F700F4A44E /* Product.swift */,
 			);
-			path = ProductList;
-			sourceTree = "<group>";
-		};
-		846B092D241620F900E76080 /* ProductDetail */ = {
-			isa = PBXGroup;
-			children = (
-				84729EE9242D0B090067C813 /* ProductDetail.swift */,
-			);
-			path = ProductDetail;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		846B5F452401693600D10EA6 /* ViewController */ = {
@@ -119,6 +108,7 @@
 			children = (
 				846F8E0124156E2800DB4A7D /* ProductDetail */,
 				8469A59E2402954C00F4A44E /* ProductList */,
+				84751291243F5A870095A5EA /* Resources */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -140,14 +130,6 @@
 				8469BB6324311BD500AA1E01 /* ThumbnailCollectionViewCell.swift */,
 			);
 			path = Cell;
-			sourceTree = "<group>";
-		};
-		846EE3E824338A9100A3987E /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				846EE3E924338AAA00A3987E /* Base */,
-			);
-			path = Core;
 			sourceTree = "<group>";
 		};
 		846EE3E924338AAA00A3987E /* Base */ = {
@@ -215,12 +197,50 @@
 			path = Font;
 			sourceTree = "<group>";
 		};
+		84751288243F581C0095A5EA /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				848D207023FD85E8001CF01A /* Main.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		84751289243F588F0095A5EA /* Module */ = {
+			isa = PBXGroup;
+			children = (
+				846EE3E924338AAA00A3987E /* Base */,
+			);
+			path = Module;
+			sourceTree = "<group>";
+		};
+		8475128C243F5A870095A5EA /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				8475128A243F5A870095A5EA /* NotoSansCJKkr-Black.otf */,
+				8475128B243F5A870095A5EA /* NotoSansCJKkr-Bold.otf */,
+			);
+			name = Font;
+			path = Resources/Font;
+			sourceTree = "<group>";
+		};
+		84751291243F5A870095A5EA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8475128C243F5A870095A5EA /* Font */,
+				8475128D243F5A870095A5EA /* Info.plist */,
+				8475128E243F5A870095A5EA /* Assets.xcassets */,
+				8475128F243F5A870095A5EA /* LaunchScreen.storyboard */,
+			);
+			name = Resources;
+			path = /Users/Parkgeunhyeong/Desktop/git/ex_idus/ex_idus/ViewController/ProductList/Resources;
+			sourceTree = "<absolute>";
+		};
 		848D205E23FD85E8001CF01A = {
 			isa = PBXGroup;
 			children = (
 				848D206923FD85E8001CF01A /* ex_idus */,
 				848D206823FD85E8001CF01A /* Products */,
-				84AB88AF23FECD46000AA0C1 /* Resource */,
+				84AB88AF23FECD46000AA0C1 /* Resources */,
 				E4B39EBA88FD1D913118C26A /* Frameworks */,
 				986D11E06199CA29D586981A /* Pods */,
 			);
@@ -237,26 +257,26 @@
 		848D206923FD85E8001CF01A /* ex_idus */ = {
 			isa = PBXGroup;
 			children = (
-				846EE3E824338A9100A3987E /* Core */,
-				846FDE422417C88E003613B2 /* Service */,
 				848D206A23FD85E8001CF01A /* AppDelegate.swift */,
-				848D207823FD85ED001CF01A /* Info.plist */,
-				846F8DFD24156A4D00DB4A7D /* Utility */,
+				84751288243F581C0095A5EA /* Storyboard */,
+				84751289243F588F0095A5EA /* Module */,
+				846FDE422417C88E003613B2 /* Service */,
 				8469A5A1240295D900F4A44E /* Model */,
+				846F8DFD24156A4D00DB4A7D /* Utility */,
 				846B5F452401693600D10EA6 /* ViewController */,
 			);
 			path = ex_idus;
 			sourceTree = "<group>";
 		};
-		84AB88AF23FECD46000AA0C1 /* Resource */ = {
+		84AB88AF23FECD46000AA0C1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				847512812439F1390095A5EA /* Font */,
-				848D207023FD85E8001CF01A /* Main.storyboard */,
+				848D207823FD85ED001CF01A /* Info.plist */,
 				848D207323FD85ED001CF01A /* Assets.xcassets */,
 				848D207523FD85ED001CF01A /* LaunchScreen.storyboard */,
 			);
-			path = Resource;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		986D11E06199CA29D586981A /* Pods */ = {
@@ -559,7 +579,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L8A7A463KF;
-				INFOPLIST_FILE = ex_idus/Info.plist;
+				INFOPLIST_FILE = ex_idus/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -579,7 +599,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L8A7A463KF;
-				INFOPLIST_FILE = ex_idus/Info.plist;
+				INFOPLIST_FILE = ex_idus/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
