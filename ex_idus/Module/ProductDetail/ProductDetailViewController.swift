@@ -9,8 +9,8 @@
 import UIKit
 import SnapKit
 
-class ProductDetailViewController: UIViewController {
-    // MARK: - Constant
+class ProductDetailViewController: BaseViewController {
+    
     struct UI {
         struct purchaesButton {
             static let leading: CGFloat = 30
@@ -30,10 +30,9 @@ class ProductDetailViewController: UIViewController {
     @IBOutlet weak var productDetailTableView: UITableView!
     @IBOutlet weak var purchaseButton: UIButton!
     
-    // MARK: - Life Cycle
+    // MARK: View LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
         receiveData(id: id)
         productDetailTableView.backgroundColor = AppTheme.color.main
     }
@@ -49,21 +48,22 @@ class ProductDetailViewController: UIViewController {
         )
     }
     
-    // MARK: - Methods
-    private func setupUI() {
-        productDetailTableView.delegate = self
-        productDetailTableView.dataSource = self
-        //productDetailTableView.estimatedRowHeight = 50
-        productDetailTableView.rowHeight = UITableView.automaticDimension
-        purchaseButton.layer.cornerRadius = UI.purchaesButton.connerRadius
-        self.purchaseButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(UI.purchaesButton.trailing)
-            $0.leading.equalToSuperview().offset(UI.purchaesButton.leading)
-            $0.height.equalTo(UI.purchaesButton.height)
-            $0.bottom.equalToSuperview().offset(UI.purchaesButton.bottom)
-        }
-    }
+    override func setupUI() {
+         productDetailTableView.delegate = self
+         productDetailTableView.dataSource = self
+         productDetailTableView.estimatedRowHeight = 50
+         productDetailTableView.rowHeight = UITableView.automaticDimension
+         purchaseButton.layer.cornerRadius = UI.purchaesButton.connerRadius
+         self.purchaseButton.snp.makeConstraints {
+             $0.trailing.equalToSuperview().offset(UI.purchaesButton.trailing)
+             $0.leading.equalToSuperview().offset(UI.purchaesButton.leading)
+             $0.height.equalTo(UI.purchaesButton.height)
+             $0.bottom.equalToSuperview().offset(UI.purchaesButton.bottom)
+         }
+     }
     
+    // MARK: - Methods
+ 
     private func reload() {
         productDetailTableView.reloadData()
     }

@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import CoreGraphics
 
-class ProductListViewController: UIViewController {
+class ProductListViewController: BaseViewController {
 
     // MARK: Constant
 
@@ -38,18 +38,30 @@ class ProductListViewController: UIViewController {
     }()
 
     
-
+    // MARK: View LifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         showLoading(true)
         receiveData()
-        setupUI()
+    }
+    
+    override func setupUI() {
+        navigationItem.titleView = logoImageView
+        setupFlowLayout()
+        productListCollectionView.delegate = self
+        productListCollectionView.dataSource = self
+        productListCollectionView.refreshControl = refreshControl
+        productListCollectionView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        let loadingReusableNib = UINib(nibName: "LoadingReusableView", bundle: nil)
+        productListCollectionView.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: LoadingReusableView.reuseIdentifier)
     }
 }
 
 // MARK: - Methods
 
 extension ProductListViewController {
+
     private func receiveData(page: Int = 1) {
 
         Network.shared.request(target: .productList(page: page), decoder: ProductData.self) { [weak self] response in
@@ -78,17 +90,6 @@ extension ProductListViewController {
         self.productListCollectionView.collectionViewLayout = flowLayout
     }
 
-    private func setupUI() {
-        navigationItem.titleView = logoImageView
-        setupFlowLayout()
-        productListCollectionView.delegate = self
-        productListCollectionView.dataSource = self
-        productListCollectionView.refreshControl = refreshControl
-        productListCollectionView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
-        let loadingReusableNib = UINib(nibName: "LoadingReusableView", bundle: nil)
-        productListCollectionView.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: LoadingReusableView.reuseIdentifier)
-        
-    }
 
     private func reload() {
         productListCollectionView.reloadData()
@@ -116,7 +117,7 @@ extension ProductListViewController {
 
     @objc func refresh() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-            self?.list.removeAll(keepingCapacity: true)
+            self?.list.removeAll(keepingCapacity: true) //메모리 주소 킵
             self?.pageNum = 1
             self?.receiveData()
             self?.reload()
