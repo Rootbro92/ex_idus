@@ -26,17 +26,17 @@ extension ProductDetailViewController: UITableViewDataSource {
 
         switch itemType {
         case .thumb:
-            let cell = tableView.dequeueReusableCell(withIdentifier: ProductThumbnailCell.reuseIdentifier, for: indexPath) as! ProductThumbnailCell
+            let cell = tableView.dequeue(ProductThumbnailCell.self, for: indexPath)
             cell.configure(thumbList: detailData.thumbList)
             return cell
 
         case .productInfo:
-            let cell = tableView.dequeueReusableCell(withIdentifier: ProductInfoCell.reuseIdentifier, for: indexPath) as! ProductInfoCell
+            let cell = tableView.dequeue(ProductInfoCell.self, for: indexPath)
             cell.configure(seller: detailData.seller, title: detailData.title, cost: detailData.cost,discountCost: detailData.discountCost, discountRate: detailData.discountRate)
             return cell
 
         case .description:
-            let cell = tableView.dequeueReusableCell(withIdentifier: ProductDetailDescriptionCell.reuseIdentifier, for: indexPath) as! ProductDetailDescriptionCell
+            let cell = tableView.dequeue(ProductDetailDescriptionCell.self, for: indexPath)
             cell.configure(description: detailData.description)
             return cell
 
