@@ -18,13 +18,10 @@ class ProductInfoCell: UITableViewCell {
     @IBOutlet weak var discountRateLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
     }
     func configure(seller: String, title: String, cost: String, discountCost: String?, discountRate: String?) {
         self.seller.text = seller

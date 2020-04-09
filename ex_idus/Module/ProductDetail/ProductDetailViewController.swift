@@ -20,6 +20,9 @@ class ProductDetailViewController: BaseViewController {
             static let connerRadius: CGFloat = 15
             static let increaseAnimationCenterY: CGFloat = 190
         }
+        struct productDetailTableView {
+            static let estimatedRowHeight: CGFloat = 50
+        }
     }
     
     // MARK: - Property
@@ -51,7 +54,7 @@ class ProductDetailViewController: BaseViewController {
     override func setupUI() {
          productDetailTableView.delegate = self
          productDetailTableView.dataSource = self
-         productDetailTableView.estimatedRowHeight = 50
+        productDetailTableView.estimatedRowHeight = UI.productDetailTableView.estimatedRowHeight
          productDetailTableView.rowHeight = UITableView.automaticDimension
          purchaseButton.layer.cornerRadius = UI.purchaesButton.connerRadius
          self.purchaseButton.snp.makeConstraints {

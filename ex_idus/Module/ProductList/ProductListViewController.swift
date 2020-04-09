@@ -117,7 +117,7 @@ extension ProductListViewController {
 
     @objc func refresh() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-            self?.list.removeAll(keepingCapacity: true) //메모리 주소 킵
+            self?.list.removeAll(keepingCapacity: true)
             self?.pageNum = 1
             self?.receiveData()
             self?.reload()

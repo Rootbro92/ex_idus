@@ -23,7 +23,6 @@ class ProductCell: UICollectionViewCell {
         super.awakeFromNib()
         titleLabel.font = AppTheme.font.NotoSansCJKkrBlack(size: UI.fontSize)
         sellerLabel.font = AppTheme.font.NotoSansCJKkrBold(size: UI.fontSize)
-        // Initialization code
     }
     
     func configure(with product: Product) {

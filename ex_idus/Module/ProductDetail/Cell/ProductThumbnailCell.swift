@@ -25,7 +25,6 @@ class ProductThumbnailCell: UITableViewCell {
         super.awakeFromNib()
         setupUI()
         setupFlowLayout()
-        // Initialization code
     }
 
     private func setupFlowLayout() {
@@ -40,8 +39,6 @@ class ProductThumbnailCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
     func setupUI() {
