@@ -9,7 +9,6 @@
 import UIKit
 
 class ProductDetailDescriptionCell: UITableViewCell {
-
     @IBOutlet weak var detailDescription: UILabel!
 
     override func awakeFromNib() {

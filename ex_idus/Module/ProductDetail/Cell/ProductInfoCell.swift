@@ -9,13 +9,12 @@
 import UIKit
 
 class ProductInfoCell: UITableViewCell {
-    
     @IBOutlet weak var seller: UILabel!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var cost: UILabel!
-    
     @IBOutlet weak var discountCostLabel: UILabel!
     @IBOutlet weak var discountRateLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -23,6 +22,7 @@ class ProductInfoCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
+    
     func configure(seller: String, title: String, cost: String, discountCost: String?, discountRate: String?) {
         self.seller.text = seller
         self.title.text = title

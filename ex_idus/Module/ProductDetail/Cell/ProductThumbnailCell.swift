@@ -9,7 +9,6 @@
 import UIKit
 
 class ProductThumbnailCell: UITableViewCell {
-
     struct UI {
         static let itemWidth: CGFloat = UIScreen.main.bounds.width
         static let itemHeight: CGFloat = itemWidth
@@ -79,7 +78,6 @@ extension ProductThumbnailCell: UICollectionViewDataSource {
 }
 
 extension ProductThumbnailCell: UICollectionViewDelegate {
-
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
       let page = Int(targetContentOffset.pointee.x / self.frame.width)
         setProgress(page: page)

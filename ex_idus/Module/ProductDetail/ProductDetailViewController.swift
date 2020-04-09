@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 
 class ProductDetailViewController: BaseViewController {
+    // MARK: Constant
     
     struct UI {
         struct purchaesButton {
@@ -25,15 +26,18 @@ class ProductDetailViewController: BaseViewController {
         }
     }
     
-    // MARK: - Property
+    // MARK: Property
+    
     var id: Int = 0
     var detailData: ProductDetail = ProductDetail()
     
-    // MARK: - UI Property
+    // MARK: UI Property
+    
     @IBOutlet weak var productDetailTableView: UITableView!
     @IBOutlet weak var purchaseButton: UIButton!
     
     // MARK: View LifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         receiveData(id: id)
@@ -65,8 +69,8 @@ class ProductDetailViewController: BaseViewController {
          }
      }
     
-    // MARK: - Methods
- 
+    // MARK: Methods
+    
     private func reload() {
         productDetailTableView.reloadData()
     }
@@ -89,6 +93,7 @@ class ProductDetailViewController: BaseViewController {
     }
     
     // MARK: - IBAction
+    
     @IBAction func dismissAction(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
