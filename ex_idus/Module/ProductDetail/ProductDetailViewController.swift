@@ -46,28 +46,28 @@ class ProductDetailViewController: BaseViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         UIButton.animate(withDuration: 1.5,
-        delay: 0.2,
-        usingSpringWithDamping: 1.0,
-        initialSpringVelocity: 1.0,
-        options: [.curveEaseInOut],
-        animations: {
-            self.purchaseButton.center.y -= UI.purchaesButton.increaseAnimationCenterY }
+                         delay: 0.2,
+                         usingSpringWithDamping: 1.0,
+                         initialSpringVelocity: 1.0,
+                         options: [.curveEaseInOut],
+                         animations: {
+                            self.purchaseButton.center.y -= UI.purchaesButton.increaseAnimationCenterY }
         )
     }
     
     override func setupUI() {
-         productDetailTableView.delegate = self
-         productDetailTableView.dataSource = self
+        productDetailTableView.delegate = self
+        productDetailTableView.dataSource = self
         productDetailTableView.estimatedRowHeight = UI.productDetailTableView.estimatedRowHeight
-         productDetailTableView.rowHeight = UITableView.automaticDimension
-         purchaseButton.layer.cornerRadius = UI.purchaesButton.connerRadius
-         self.purchaseButton.snp.makeConstraints {
-             $0.trailing.equalToSuperview().offset(UI.purchaesButton.trailing)
-             $0.leading.equalToSuperview().offset(UI.purchaesButton.leading)
-             $0.height.equalTo(UI.purchaesButton.height)
-             $0.bottom.equalToSuperview().offset(UI.purchaesButton.bottom)
-         }
-     }
+        productDetailTableView.rowHeight = UITableView.automaticDimension
+        purchaseButton.layer.cornerRadius = UI.purchaesButton.connerRadius
+        self.purchaseButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().offset(UI.purchaesButton.trailing)
+            $0.leading.equalToSuperview().offset(UI.purchaesButton.leading)
+            $0.height.equalTo(UI.purchaesButton.height)
+            $0.bottom.equalToSuperview().offset(UI.purchaesButton.bottom)
+        }
+    }
     
     // MARK: Methods
     

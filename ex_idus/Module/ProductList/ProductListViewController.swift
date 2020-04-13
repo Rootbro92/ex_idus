@@ -61,9 +61,7 @@ class ProductListViewController: BaseViewController {
 // MARK: - Methods
 
 extension ProductListViewController {
-
     private func receiveData(page: Int = 1) {
-
         Network.shared.request(target: .productList(page: page), decoder: ProductData.self) { [weak self] response in
             switch response.result {
             case .success:
@@ -89,7 +87,6 @@ extension ProductListViewController {
         flowLayout.itemSize = CGSize(width: UI.itemWidth, height: UI.itemHeight)
         self.productListCollectionView.collectionViewLayout = flowLayout
     }
-
 
     private func reload() {
         productListCollectionView.reloadData()
@@ -174,7 +171,6 @@ extension ProductListViewController: UICollectionViewDelegate {
 
 // MARK: - CollectionView Delegate FlowLayout
 extension ProductListViewController: UICollectionViewDelegateFlowLayout {
-
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
 
         if let isLoading = self.loadingView?.activityIndicator.isAnimating, isLoading {
